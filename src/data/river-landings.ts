@@ -200,6 +200,7 @@ export const RIVER_CITIES: Record<string, RiverCityLanding> = {
   krasnoyarsk: {
     slug: "krasnoyarsk",
     cityName: "Красноярск",
+    cityNameDative: "Красноярску",
     riverName: "Енисей",
     piers: ["Речной вокзал", "Причал «Коммунальный мост»"],
     seasons: "июнь — сентябрь",
