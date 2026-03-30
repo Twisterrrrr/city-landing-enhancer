@@ -98,6 +98,7 @@ export const RIVER_CITIES: Record<string, RiverCityLanding> = {
   "nizhny-novgorod": {
     slug: "nizhny-novgorod",
     cityName: "Нижний Новгород",
+    cityNameDative: "Нижнему Новгороду",
     riverName: "Ока и Волга",
     piers: ["Причал «Стрелка»", "Речной вокзал"],
     seasons: "май — октябрь",
