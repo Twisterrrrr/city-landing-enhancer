@@ -1,5 +1,5 @@
 import { useMemo, useState, useEffect } from "react";
-import { useParams, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { HeroSection } from "@/components/landing/HeroSection";
 import { FaqSection } from "@/components/landing/FaqSection";
