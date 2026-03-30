@@ -122,6 +122,7 @@ export function SaluteFilterBar({ cities, filters, onChange }: SaluteFilterBarPr
 
       {/* Desktop (lg+): single row */}
       <div className="hidden lg:flex flex-wrap items-center gap-2">
+        <Chip label="Все города" active={filters.city === ""} onClick={() => onChange({ ...filters, city: "" })} />
         {cities.map((c) => (
           <Chip key={c} label={c} active={filters.city === c} onClick={() => onChange({ ...filters, city: c })} />
         ))}
@@ -142,6 +143,7 @@ export function SaluteFilterBar({ cities, filters, onChange }: SaluteFilterBarPr
       {/* Tablet (sm–lg): stacked rows */}
       <div className="hidden sm:block lg:hidden space-y-3">
         <div className="flex items-center gap-2 flex-wrap">
+          <Chip label="Все города" active={filters.city === ""} onClick={() => onChange({ ...filters, city: "" })} />
           {cities.map((c) => (
             <Chip key={c} label={c} active={filters.city === c} onClick={() => onChange({ ...filters, city: c })} />
           ))}
@@ -163,10 +165,14 @@ export function SaluteFilterBar({ cities, filters, onChange }: SaluteFilterBarPr
 
       {/* Mobile (<sm): stacked rows */}
       <div className="sm:hidden space-y-3">
-        <div className="flex items-center gap-2 flex-wrap">
-          {cities.map((c) => (
-            <Chip key={c} label={c} active={filters.city === c} onClick={() => onChange({ ...filters, city: c })} />
-          ))}
+        <div className="flex items-center gap-2">
+          <Select value={filters.city || "all"} onValueChange={(v) => onChange({ ...filters, city: v === "all" ? "" : v })}>
+            <SelectTrigger className="flex-1 h-9 rounded-lg text-sm"><SelectValue placeholder="Все города" /></SelectTrigger>
+            <SelectContent>
+              <SelectItem value="all">Все города</SelectItem>
+              {cities.map((c) => <SelectItem key={c} value={c}>{c}</SelectItem>)}
+            </SelectContent>
+          </Select>
         </div>
         <div className="flex items-center gap-2">
           <Select value={filters.transport || "all"} onValueChange={(v) => onChange({ ...filters, transport: v === "all" ? "" : v })}>

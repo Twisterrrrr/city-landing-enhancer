@@ -81,7 +81,7 @@ function pickOptimal(variants: TripVariant[]): number | null {
 
 const Salute = () => {
   const [filters, setFilters] = useState<SaluteFilterState>({
-    city: CITIES[0],
+    city: "",
     transport: "",
     sort: "price",
     amenities: [],
