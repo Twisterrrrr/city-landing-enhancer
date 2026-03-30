@@ -49,7 +49,7 @@ export function DateFilter({ value, onChange, className }: DateFilterProps) {
   return (
     <div className={cn("flex items-center gap-1.5", className)}>
       <button
-        className={chipClass(value === "" || value === todayIso)}
+        className={chipClass(value === todayIso)}
         onClick={() => onChange(todayIso)}
       >
         Сегодня
