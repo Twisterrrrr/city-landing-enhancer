@@ -42,6 +42,7 @@ export const RIVER_CITIES: Record<string, RiverCityLanding> = {
   spb: {
     slug: "spb",
     cityName: "Санкт-Петербург",
+    cityNameDative: "Санкт-Петербургу",
     riverName: "Нева и каналы",
     piers: ["Дворцовая наб.", "Английская наб.", "Аничков мост", "наб. Фонтанки"],
     seasons: "апрель — ноябрь",
