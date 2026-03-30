@@ -158,44 +158,6 @@ export function FilterBar({ dates, piers, filters, onChange }: FilterBarProps) {
         ))}
       </div>
 
-function DatePickerButton({ filters, onChange, dates }: { filters: FilterState; onChange: (f: FilterState) => void; dates: string[] }) {
-  const [open, setOpen] = useState(false);
-  const selectedDate = filters.date && !dates.includes(filters.date) ? new Date(filters.date + "T00:00:00") : undefined;
-  const isCustomDate = filters.date && !dates.includes(filters.date);
-
-  return (
-    <Popover open={open} onOpenChange={setOpen}>
-      <PopoverTrigger asChild>
-        <button
-          className={`inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg text-sm font-medium transition-all whitespace-nowrap border ${
-            isCustomDate
-              ? "bg-primary text-primary-foreground border-primary"
-              : "bg-background text-foreground border-border hover:border-primary/40 hover:text-primary"
-          }`}
-        >
-          <CalendarDays className="w-4 h-4" />
-          {isCustomDate ? formatDateShort(filters.date) : "Другая дата"}
-        </button>
-      </PopoverTrigger>
-      <PopoverContent className="w-auto p-0" align="start">
-        <Calendar
-          mode="single"
-          selected={selectedDate}
-          onSelect={(day) => {
-            if (day) {
-              const iso = day.toISOString().slice(0, 10);
-              onChange({ ...filters, date: iso });
-            }
-            setOpen(false);
-          }}
-          disabled={(day) => day < new Date(new Date().setHours(0, 0, 0, 0))}
-          initialFocus
-        />
-      </PopoverContent>
-    </Popover>
-  );
-}
-
 
       {/* Desktop (lg+): single row */}
       <div className="hidden lg:flex flex-wrap items-center gap-2">
