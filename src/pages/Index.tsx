@@ -95,6 +95,7 @@ const Index = () => {
     timeSlot: "",
     pier: "",
     sort: "time",
+    amenities: [],
   });
 
   const filtered = useMemo(() => {
