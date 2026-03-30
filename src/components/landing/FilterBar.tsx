@@ -172,10 +172,19 @@ export function FilterBar({ dates, piers, filters, onChange }: FilterBarProps) {
 
       {/* Desktop (lg+): single row */}
       <div className="hidden lg:flex flex-wrap items-center gap-2">
-        <Chip label="Все даты" active={!filters.date} onClick={() => onChange({ ...filters, date: "" })} />
         {dates.map((d) => (
           <Chip key={d} label={formatDateShort(d)} active={filters.date === d} onClick={() => onChange({ ...filters, date: d })} />
         ))}
+        <Select
+          value={filters.date && !dates.includes(filters.date) ? filters.date : "pick"}
+          onValueChange={(v) => { if (v !== "pick") onChange({ ...filters, date: v }); }}
+        >
+          <SelectTrigger className="w-[150px] h-9 rounded-lg text-sm"><SelectValue placeholder="Другая дата" /></SelectTrigger>
+          <SelectContent>
+            <SelectItem value="pick">Другая дата</SelectItem>
+            {dates.map((d) => <SelectItem key={d} value={d}>{formatDateShort(d)}</SelectItem>)}
+          </SelectContent>
+        </Select>
         <div className="w-px h-6 bg-border mx-1" />
         <TimeSelect filters={filters} onChange={onChange} />
         <PierSelect filters={filters} onChange={onChange} piers={piers} />
