@@ -80,7 +80,13 @@ function Chip({ label, active, onClick }: { label: string; active: boolean; onCl
 }
 
 export function FilterBar({ dates, piers, filters, onChange }: FilterBarProps) {
-  const hasFilters = filters.date || filters.timeSlot || filters.pier;
+  const hasFilters = filters.date || filters.timeSlot || filters.pier || filters.amenities.length > 0;
+
+  const toggleAmenity = (a: Amenity) => {
+    const current = filters.amenities;
+    const next = current.includes(a) ? current.filter((x) => x !== a) : [...current, a];
+    onChange({ ...filters, amenities: next });
+  };
 
   return (
     <div className="space-y-4">
