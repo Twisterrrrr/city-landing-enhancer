@@ -250,6 +250,7 @@ export const RIVER_CITIES: Record<string, RiverCityLanding> = {
   rostov: {
     slug: "rostov-on-don",
     cityName: "Ростов-на-Дону",
+    cityNameDative: "Ростову-на-Дону",
     riverName: "Дон",
     piers: ["Набережная Дона", "Причал «Левый берег»"],
     seasons: "апрель — октябрь",
