@@ -6,6 +6,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { DateFilter } from "@/components/filters/DateFilter";
 
 import type { Amenity } from "@/components/landing/TripCard";
 import { AMENITY_META } from "@/components/landing/TripCard";
@@ -19,7 +20,6 @@ export interface FilterState {
 }
 
 interface FilterBarProps {
-  dates: string[];
   piers: string[];
   filters: FilterState;
   onChange: (f: FilterState) => void;
@@ -48,22 +48,6 @@ const AMENITY_ICON_MAP: Record<Amenity, React.ReactNode> = {
   audioguide: <Headphones className="w-4 h-4" />,
   deck: <Sun className="w-4 h-4" />,
 };
-import { DateFilter } from "@/components/filters/DateFilter";
-
-function Chip({ label, active, onClick }: { label: string; active: boolean; onClick: () => void }) {
-  return (
-    <button
-      onClick={onClick}
-      className={`px-3.5 py-1.5 rounded-lg text-sm font-medium transition-all whitespace-nowrap border ${
-        active
-          ? "bg-primary text-primary-foreground border-primary"
-          : "bg-background text-foreground border-border hover:border-primary/40 hover:text-primary"
-      }`}
-    >
-      {label}
-    </button>
-  );
-}
 
 function AmenityIcons({ filters, toggleAmenity }: { filters: FilterState; toggleAmenity: (a: Amenity) => void }) {
   return (
@@ -95,7 +79,7 @@ function ResetButton({ filters, onChange }: { filters: FilterState; onChange: (f
   );
 }
 
-function TimeSelect({ filters, onChange }: { filters: FilterState; onChange: (f: FilterState) => void; className?: string }) {
+function TimeSelect({ filters, onChange }: { filters: FilterState; onChange: (f: FilterState) => void }) {
   return (
     <Select value={filters.timeSlot || "all"} onValueChange={(v) => onChange({ ...filters, timeSlot: v === "all" ? "" : v })}>
       <SelectTrigger className="w-[160px] h-9 rounded-lg text-sm"><SelectValue placeholder="Любое время" /></SelectTrigger>
@@ -117,7 +101,7 @@ function PierSelect({ filters, onChange, piers }: { filters: FilterState; onChan
   );
 }
 
-export function FilterBar({ dates, piers, filters, onChange }: FilterBarProps) {
+export function FilterBar({ piers, filters, onChange }: FilterBarProps) {
   const toggleAmenity = (a: Amenity) => {
     const current = filters.amenities;
     const next = current.includes(a) ? current.filter((x) => x !== a) : [...current, a];
@@ -145,8 +129,8 @@ export function FilterBar({ dates, piers, filters, onChange }: FilterBarProps) {
           </button>
         ))}
       </div>
-import { DateFilter } from "@/components/filters/DateFilter";
 
+      {/* Desktop (lg+): single row */}
       <div className="hidden lg:flex flex-wrap items-center gap-2">
         <DateFilter value={filters.date} onChange={(d) => onChange({ ...filters, date: d })} />
         <div className="w-px h-6 bg-border mx-1" />
@@ -162,8 +146,6 @@ import { DateFilter } from "@/components/filters/DateFilter";
       {/* Tablet (sm–lg): stacked rows */}
       <div className="hidden sm:block lg:hidden space-y-3">
         <DateFilter value={filters.date} onChange={(d) => onChange({ ...filters, date: d })} />
-
-        {/* Row 2: time + pier selects + amenity icons */}
         <div className="flex items-center gap-2">
           <TimeSelect filters={filters} onChange={onChange} />
           <PierSelect filters={filters} onChange={onChange} piers={piers} />
@@ -179,7 +161,6 @@ import { DateFilter } from "@/components/filters/DateFilter";
       <div className="sm:hidden space-y-3">
         <DateFilter value={filters.date} onChange={(d) => onChange({ ...filters, date: d })} />
 
-        {/* Row 2: time + pier selects */}
         <div className="flex items-center gap-2">
           <Select value={filters.timeSlot || "all"} onValueChange={(v) => onChange({ ...filters, timeSlot: v === "all" ? "" : v })}>
             <SelectTrigger className="flex-1 h-9 rounded-lg text-sm"><SelectValue placeholder="Любое время" /></SelectTrigger>
@@ -196,13 +177,11 @@ import { DateFilter } from "@/components/filters/DateFilter";
           )}
         </div>
 
-        {/* Row 3: amenity icons */}
         <div className="flex items-center gap-1.5">
           <AmenityIcons filters={filters} toggleAmenity={toggleAmenity} />
           <ResetButton filters={filters} onChange={onChange} />
         </div>
 
-        {/* Row 4: sort */}
         <div className="flex items-center gap-2">
           <span className="text-sm text-muted-foreground whitespace-nowrap">Сортировать:</span>
           <Select value={filters.sort} onValueChange={(v) => onChange({ ...filters, sort: v })}>
