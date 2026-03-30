@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useMemo, useState, useEffect } from "react";
 import { HeroSection } from "@/components/landing/HeroSection";
 import { FilterBar, type FilterState } from "@/components/landing/FilterBar";
 import { TripCard, type TripVariant, type Amenity } from "@/components/landing/TripCard";
@@ -7,6 +7,7 @@ import { FaqSection } from "@/components/landing/FaqSection";
 import { ReviewsSection } from "@/components/landing/ReviewsSection";
 import { StickyHeader } from "@/components/landing/StickyHeader";
 import { Shield } from "lucide-react";
+import { useGeolocation, distanceMeters, type GeoPosition } from "@/hooks/use-geolocation";
 
 // ─── MOCK DATA ──────────────────────────────────────────────
 
