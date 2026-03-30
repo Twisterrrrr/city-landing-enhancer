@@ -140,7 +140,6 @@ export function FilterBar({ dates, piers, filters, onChange }: FilterBarProps) {
                   <SelectValue placeholder="Выбрать дату" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="pick">Все даты</SelectItem>
                   {otherDates.map((d) => (
                     <SelectItem key={d} value={d}>
                       {formatDateShort(d)}
