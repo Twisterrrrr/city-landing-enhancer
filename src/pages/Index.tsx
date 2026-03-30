@@ -1,7 +1,7 @@
 import { useMemo, useState } from "react";
 import { HeroSection } from "@/components/landing/HeroSection";
 import { FilterBar, type FilterState } from "@/components/landing/FilterBar";
-import { TripCard, type TripVariant } from "@/components/landing/TripCard";
+import { TripCard, type TripVariant, type Amenity } from "@/components/landing/TripCard";
 import { HowToChoose } from "@/components/landing/HowToChoose";
 import { FaqSection } from "@/components/landing/FaqSection";
 import { ReviewsSection } from "@/components/landing/ReviewsSection";
