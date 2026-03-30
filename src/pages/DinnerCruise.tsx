@@ -412,8 +412,7 @@ function pickBest(variants: DinnerCruiseVariant[]): number | null {
 // ─── Page ───────────────────────────────────────────────────
 
 const DinnerCruise = () => {
-  const { city: citySlug } = useParams<{ city?: string }>();
-  const landing = citySlug ? DINNER_CRUISE_CITIES[citySlug] : undefined;
+  const landing = DINNER_CRUISE_CITIES["moscow"];
 
   const [filters, setFilters] = useState<DinnerFilterState>({
     menuType: "",
