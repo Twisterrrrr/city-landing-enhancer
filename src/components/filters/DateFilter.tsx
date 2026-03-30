@@ -68,7 +68,7 @@ export function DateFilter({ value, onChange, className }: DateFilterProps) {
         <PopoverContent className="w-auto p-0" align="start">
           <Calendar
             mode="single"
-            selected={value ? new Date(value + "T12:00:00") : undefined}
+            selected={isCustom ? new Date(value + "T12:00:00") : undefined}
             onSelect={(d) => {
               if (d) {
                 onChange(dateToMoscowISO(d));
