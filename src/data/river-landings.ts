@@ -12,6 +12,7 @@ export const RIVER_CITIES: Record<string, RiverCityLanding> = {
   moscow: {
     slug: "moscow",
     cityName: "Москва",
+    cityNameDative: "Москве",
     riverName: "Москва-река",
     piers: ["Причал «Большой Устьинский мост»", "Причал «Киевский вокзал»", "Причал «Парк Горького»", "Причал «Новоспасский мост»"],
     seasons: "апрель — октябрь",
