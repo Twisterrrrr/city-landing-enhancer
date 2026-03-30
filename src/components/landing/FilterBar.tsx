@@ -110,22 +110,21 @@ export function FilterBar({ dates, piers, filters, onChange }: FilterBarProps) {
         ))}
       </div>
 
-      {/* Filters row */}
-      <div className="flex flex-wrap items-center gap-2">
-        {/* Date chips */}
-        <Chip label="Все даты" active={!filters.date} onClick={() => onChange({ ...filters, date: "" })} />
+      {/* Date chips — single row */}
+      <div className="flex items-center gap-1.5 sm:gap-2">
+        <Chip label="Все" active={!filters.date} onClick={() => onChange({ ...filters, date: "" })} />
         {dates.map((d) => (
           <Chip key={d} label={formatDateShort(d)} active={filters.date === d} onClick={() => onChange({ ...filters, date: d })} />
         ))}
+      </div>
 
-        <div className="w-px h-6 bg-border mx-1 hidden sm:block" />
-
-        {/* Time select */}
+      {/* Time + Pier selects — one row on mobile */}
+      <div className="flex items-center gap-2">
         <Select
           value={filters.timeSlot || "all"}
           onValueChange={(v) => onChange({ ...filters, timeSlot: v === "all" ? "" : v })}
         >
-          <SelectTrigger className="w-[160px] h-9 rounded-lg text-sm">
+          <SelectTrigger className="flex-1 sm:w-[160px] sm:flex-none h-9 rounded-lg text-sm">
             <SelectValue placeholder="Время" />
           </SelectTrigger>
           <SelectContent>
@@ -137,13 +136,12 @@ export function FilterBar({ dates, piers, filters, onChange }: FilterBarProps) {
           </SelectContent>
         </Select>
 
-        {/* Pier select */}
         {piers.length > 0 && (
           <Select
             value={filters.pier || "all"}
             onValueChange={(v) => onChange({ ...filters, pier: v === "all" ? "" : v })}
           >
-            <SelectTrigger className="w-[180px] h-9 rounded-lg text-sm">
+            <SelectTrigger className="flex-1 sm:w-[180px] sm:flex-none h-9 rounded-lg text-sm">
               <SelectValue placeholder="Причал" />
             </SelectTrigger>
             <SelectContent>
@@ -156,10 +154,10 @@ export function FilterBar({ dates, piers, filters, onChange }: FilterBarProps) {
             </SelectContent>
           </Select>
         )}
+      </div>
 
-        <div className="w-px h-6 bg-border mx-1 hidden sm:block" />
-
-        {/* Amenity filter — icon chips */}
+      {/* Amenity icons + reset */}
+      <div className="flex items-center gap-2">
         <div className="flex items-center gap-1.5">
           {ALL_AMENITIES.map((a) => {
             const active = filters.amenities.includes(a);
