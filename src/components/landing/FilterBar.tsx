@@ -48,7 +48,7 @@ function Chip({ label, active, onClick }: { label: string; active: boolean; onCl
   return (
     <button
       onClick={onClick}
-      className={`px-3.5 py-1.5 rounded-full text-sm font-medium transition-all whitespace-nowrap border ${
+      className={`px-3.5 py-1.5 rounded-lg text-sm font-medium transition-all whitespace-nowrap border ${
         active
           ? "bg-primary text-primary-foreground border-primary"
           : "bg-background text-foreground border-border hover:border-primary/40 hover:text-primary"
@@ -99,7 +99,7 @@ export function FilterBar({ dates, piers, filters, onChange }: FilterBarProps) {
           value={filters.timeSlot || "all"}
           onValueChange={(v) => onChange({ ...filters, timeSlot: v === "all" ? "" : v })}
         >
-          <SelectTrigger className="w-[160px] h-9 rounded-full text-sm">
+          <SelectTrigger className="w-[160px] h-9 rounded-lg text-sm">
             <SelectValue placeholder="Время" />
           </SelectTrigger>
           <SelectContent>
@@ -117,7 +117,7 @@ export function FilterBar({ dates, piers, filters, onChange }: FilterBarProps) {
             value={filters.pier || "all"}
             onValueChange={(v) => onChange({ ...filters, pier: v === "all" ? "" : v })}
           >
-            <SelectTrigger className="w-[180px] h-9 rounded-full text-sm">
+            <SelectTrigger className="w-[180px] h-9 rounded-lg text-sm">
               <SelectValue placeholder="Причал" />
             </SelectTrigger>
             <SelectContent>

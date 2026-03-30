@@ -94,18 +94,16 @@ export function TripCard({ variant, isBest, index }: TripCardProps) {
               {variant.rating} ({variant.reviewCount})
             </span>
           </div>
-          {/* Seats under details */}
-          <div className={`flex items-center gap-1 text-xs font-medium ${urgencyClass}`}>
-            <Users className="w-3.5 h-3.5" />
-            {soldOut ? "Распродано" : `Осталось ${seatsLeft} мест`}
-          </div>
         </div>
 
-        {/* Price + Button inline */}
-        <div className="flex items-center gap-3 shrink-0">
-          <div className="text-2xl font-bold text-foreground whitespace-nowrap">
-            {formatPrice(variant.price)} ₽
-          </div>
+        {/* Seats */}
+        <div className={`flex items-center gap-1 text-xs font-medium shrink-0 ${urgencyClass}`}>
+          <Users className="w-3.5 h-3.5" />
+          {soldOut ? "Распродано" : `Осталось ${seatsLeft} мест`}
+        </div>
+
+        {/* Button */}
+        <div className="shrink-0">
           <button
             disabled={soldOut}
             className={`inline-flex items-center gap-1.5 px-5 py-2.5 rounded-lg text-sm font-semibold transition-all whitespace-nowrap ${
@@ -115,7 +113,7 @@ export function TripCard({ variant, isBest, index }: TripCardProps) {
             }`}
           >
             {soldOut ? "Распродано" : (
-              <>Купить <ArrowRight className="w-3.5 h-3.5" /></>
+              <>{formatPrice(variant.price)} ₽ <ArrowRight className="w-3.5 h-3.5" /></>
             )}
           </button>
         </div>
