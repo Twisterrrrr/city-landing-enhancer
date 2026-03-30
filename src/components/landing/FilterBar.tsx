@@ -1,4 +1,4 @@
-import { RotateCcw } from "lucide-react";
+import { RotateCcw, UtensilsCrossed, Music, Mic, Headphones, Sun } from "lucide-react";
 import {
   Select,
   SelectContent,
@@ -6,6 +6,12 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
+import { Checkbox } from "@/components/ui/checkbox";
 
 import type { Amenity } from "@/components/landing/TripCard";
 import { AMENITY_META } from "@/components/landing/TripCard";

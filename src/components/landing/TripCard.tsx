@@ -52,6 +52,31 @@ function formatPrice(n: number): string {
   return n.toLocaleString("ru-RU");
 }
 
+const AMENITY_ICONS: Record<Amenity, React.ReactNode> = {
+  food: <UtensilsCrossed className="w-3.5 h-3.5" />,
+  music: <Music className="w-3.5 h-3.5" />,
+  guide: <Mic className="w-3.5 h-3.5" />,
+  audioguide: <Headphones className="w-3.5 h-3.5" />,
+  deck: <Sun className="w-3.5 h-3.5" />,
+};
+
+function AmenityIcons({ amenities }: { amenities?: Amenity[] }) {
+  if (!amenities || amenities.length === 0) return null;
+  return (
+    <div className="flex items-center gap-1.5">
+      {amenities.map((a) => (
+        <span
+          key={a}
+          title={AMENITY_META[a].label}
+          className="inline-flex items-center justify-center w-7 h-7 rounded-md bg-muted text-muted-foreground hover:text-foreground transition-colors"
+        >
+          {AMENITY_ICONS[a]}
+        </span>
+      ))}
+    </div>
+  );
+}
+
 export function TripCard({ variant, isBest, index }: TripCardProps) {
   const seatsLeft = variant.availableTickets;
   const soldOut = seatsLeft <= 0;
