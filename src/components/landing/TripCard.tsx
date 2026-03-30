@@ -129,7 +129,7 @@ export function TripCard({ variant, isBest, index }: TripCardProps) {
               <Star className="w-3.5 h-3.5 text-yellow-500" />
               {variant.rating} ({variant.reviewCount})
             </span>
-          </div>
+          <AmenityIcons amenities={variant.amenities} />
         </div>
         {/* Seats + Button */}
         <div className="shrink-0 flex items-center gap-4 lg:gap-[120px]">
