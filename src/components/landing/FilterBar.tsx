@@ -253,6 +253,21 @@ export function FilterBar({ dates, piers, filters, onChange }: FilterBarProps) {
           <AmenityIcons filters={filters} toggleAmenity={toggleAmenity} />
           <ResetButton filters={filters} onChange={onChange} />
         </div>
+
+        {/* Row 4: sort */}
+        <div className="flex items-center gap-2">
+          <span className="text-sm text-muted-foreground whitespace-nowrap">Сортировать:</span>
+          <Select value={filters.sort} onValueChange={(v) => onChange({ ...filters, sort: v })}>
+            <SelectTrigger className="flex-1 h-9 rounded-lg text-sm">
+              <SelectValue placeholder="Сортировка" />
+            </SelectTrigger>
+            <SelectContent>
+              {SORT_OPTIONS.map((s) => (
+                <SelectItem key={s.value} value={s.value}>{s.label}</SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        </div>
       </div>
     </div>
   );
