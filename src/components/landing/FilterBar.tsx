@@ -161,22 +161,7 @@ export function FilterBar({ dates, piers, filters, onChange }: FilterBarProps) {
 
       {/* Tablet (sm–lg): stacked rows */}
       <div className="hidden sm:block lg:hidden space-y-3">
-        {/* Row 1: date chips + "Выбрать дату" select */}
-        <div className="flex items-center gap-2 flex-wrap">
-          {dates.map((d) => (
-            <Chip key={d} label={formatDateShort(d)} active={filters.date === d} onClick={() => onChange({ ...filters, date: d })} />
-          ))}
-          <Select
-            value={filters.date && !dates.includes(filters.date) ? filters.date : "pick"}
-            onValueChange={(v) => { if (v !== "pick") onChange({ ...filters, date: v }); }}
-          >
-            <SelectTrigger className="w-[150px] h-9 rounded-lg text-sm"><SelectValue placeholder="Другая дата" /></SelectTrigger>
-            <SelectContent>
-              <SelectItem value="pick">Другая дата</SelectItem>
-              {dates.map((d) => <SelectItem key={d} value={d}>{formatDateShort(d)}</SelectItem>)}
-            </SelectContent>
-          </Select>
-        </div>
+        <DateFilter value={filters.date} onChange={(d) => onChange({ ...filters, date: d })} />
 
         {/* Row 2: time + pier selects + amenity icons */}
         <div className="flex items-center gap-2">
