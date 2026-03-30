@@ -5,6 +5,7 @@ import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import Index from "./pages/Index.tsx";
 import Salute from "./pages/Salute.tsx";
+import RiverCruises from "./pages/RiverCruises.tsx";
 import NotFound from "./pages/NotFound.tsx";
 
 const queryClient = new QueryClient();
@@ -19,6 +20,8 @@ const App = () => (
           <Route path="/" element={<Index />} />
           <Route path="/salute-9-may" element={<Salute />} />
           <Route path="/salute-9-may/:city" element={<Salute />} />
+          <Route path="/river-cruises" element={<RiverCruises />} />
+          <Route path="/river-cruises/:city" element={<RiverCruises />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
