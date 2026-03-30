@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { format, addDays, isToday, isTomorrow } from "date-fns";
+import { format, addDays } from "date-fns";
 import { ru } from "date-fns/locale";
 import { CalendarIcon } from "lucide-react";
 import { cn } from "@/lib/utils";
@@ -25,15 +25,20 @@ function chipClass(active: boolean) {
   }`;
 }
 
-function toIso(d: Date) {
-  return format(d, "yyyy-MM-dd");
+/** Format date as yyyy-MM-dd in Europe/Moscow timezone */
+function toMoscowIso(d: Date) {
+  const msk = new Date(d.toLocaleString("en-US", { timeZone: "Europe/Moscow" }));
+  const y = msk.getFullYear();
+  const m = String(msk.getMonth() + 1).padStart(2, "0");
+  const day = String(msk.getDate()).padStart(2, "0");
+  return `${y}-${m}-${day}`;
 }
 
 export function DateFilter({ value, onChange, className }: DateFilterProps) {
   const [open, setOpen] = useState(false);
-  const today = new Date();
-  const todayIso = toIso(today);
-  const tomorrowIso = toIso(addDays(today, 1));
+  const now = new Date();
+  const todayIso = toMoscowIso(now);
+  const tomorrowIso = toMoscowIso(addDays(now, 1));
 
   const isCustom = value && value !== todayIso && value !== tomorrowIso;
 
@@ -44,7 +49,7 @@ export function DateFilter({ value, onChange, className }: DateFilterProps) {
   return (
     <div className={cn("flex items-center gap-1.5", className)}>
       <button
-        className={chipClass(value === "" || value === todayIso)}
+        className={chipClass(value === todayIso)}
         onClick={() => onChange(todayIso)}
       >
         Сегодня
@@ -71,11 +76,11 @@ export function DateFilter({ value, onChange, className }: DateFilterProps) {
             selected={value ? new Date(value + "T00:00:00") : undefined}
             onSelect={(d) => {
               if (d) {
-                onChange(toIso(d));
+                onChange(toMoscowIso(d));
                 setOpen(false);
               }
             }}
-            disabled={(d) => d < today}
+            disabled={(d) => d < now}
             initialFocus
             className={cn("p-3 pointer-events-auto")}
           />
