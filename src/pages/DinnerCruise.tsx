@@ -1,6 +1,7 @@
 import { useMemo, useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
+import { getMoscowTodayISO, dateToMoscowISO, formatMoscowShort } from "@/lib/date/moscow";
 import { HeroSection } from "@/components/landing/HeroSection";
 import { FaqSection } from "@/components/landing/FaqSection";
 import { ReviewsSection } from "@/components/landing/ReviewsSection";
@@ -414,14 +415,7 @@ function pickBest(variants: DinnerCruiseVariant[]): number | null {
 const DinnerCruise = () => {
   const landing = DINNER_CRUISE_CITIES["moscow"];
 
-  // Default date = today in Moscow timezone
-  const defaultDate = useMemo(() => {
-    const msk = new Date(new Date().toLocaleString("en-US", { timeZone: "Europe/Moscow" }));
-    const y = msk.getFullYear();
-    const m = String(msk.getMonth() + 1).padStart(2, "0");
-    const d = String(msk.getDate()).padStart(2, "0");
-    return `${y}-${m}-${d}`;
-  }, []);
+  const defaultDate = getMoscowTodayISO();
 
   const [filters, setFilters] = useState<DinnerFilterState>({
     date: defaultDate,
@@ -434,13 +428,8 @@ const DinnerCruise = () => {
 
   const filtered = useMemo(() => {
     return DINNER_CRUISE_MOCK.filter((v) => {
-      // Date filter: compare calendar day in Moscow timezone
       if (filters.date) {
-        const eventMsk = new Date(new Date(v.startsAt).toLocaleString("en-US", { timeZone: "Europe/Moscow" }));
-        const ey = eventMsk.getFullYear();
-        const em = String(eventMsk.getMonth() + 1).padStart(2, "0");
-        const ed = String(eventMsk.getDate()).padStart(2, "0");
-        const eventDay = `${ey}-${em}-${ed}`;
+        const eventDay = dateToMoscowISO(v.startsAt);
         if (eventDay !== filters.date) return false;
       }
       if (filters.menuType && v.menuType !== filters.menuType) return false;
@@ -501,7 +490,12 @@ const DinnerCruise = () => {
 
         <DinnerFilterBar filters={filters} onChange={setFilters} />
 
-        <div className="flex items-center gap-3 mt-6 mb-4">
+        <div className="flex items-center gap-3 mt-6 mb-4 flex-wrap">
+          {filters.date && (
+            <span className="inline-flex items-center gap-1.5 text-sm font-medium bg-primary/10 text-primary px-3 py-1 rounded-lg">
+              📅 {filters.date === defaultDate ? "Сегодня" : formatMoscowShort(filters.date)}
+            </span>
+          )}
           <span className="text-sm text-muted-foreground">
             {sorted.length > 0
               ? `${sorted.length} ${sorted.length === 1 ? "вариант" : sorted.length < 5 ? "варианта" : "вариантов"}`
@@ -541,10 +535,37 @@ const DinnerCruise = () => {
         </div>
 
         {sorted.length === 0 && (
-          <div className="text-center py-16">
+          <div className="text-center py-16 space-y-4">
             <p className="text-muted-foreground">
-              Попробуйте изменить фильтры
+              Нет рейсов на выбранную дату
             </p>
+            <div className="flex flex-wrap items-center justify-center gap-2">
+              <button
+                onClick={() => setFilters({ ...filters, date: defaultDate, menuType: "", timeSlot: "", format: "", maxPrice: "" })}
+                className="px-4 py-2 rounded-lg text-sm font-semibold border border-primary text-primary hover:bg-primary/5 transition-colors"
+              >
+                Сбросить фильтры
+              </button>
+              {(() => {
+                const allDates = [...new Set(DINNER_CRUISE_MOCK.map((v) => dateToMoscowISO(v.startsAt)))].sort();
+                const nearest = allDates.filter((d) => d >= defaultDate).slice(0, 3);
+                if (nearest.length === 0) return null;
+                return (
+                  <>
+                    <span className="text-sm text-muted-foreground">или</span>
+                    {nearest.map((d) => (
+                      <button
+                        key={d}
+                        onClick={() => setFilters({ ...filters, date: d })}
+                        className="px-3 py-1.5 rounded-lg text-sm font-medium border border-border hover:border-primary/40 hover:text-primary transition-colors"
+                      >
+                        {formatMoscowShort(d)}
+                      </button>
+                    ))}
+                  </>
+                );
+              })()}
+            </div>
           </div>
         )}
       </section>
