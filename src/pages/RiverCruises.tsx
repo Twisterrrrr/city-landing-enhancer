@@ -214,6 +214,11 @@ const RiverCruises = () => {
         totalTrips={MOCK.length}
         totalSold={24600}
         avgRating={4.7}
+        breadcrumbs={[
+          { label: "Главная", href: "/" },
+          { label: "Речные прогулки", href: "/river-cruises" },
+          ...(landing ? [{ label: landing.cityName }] : []),
+        ]}
       />
 
       {landing && <CityIntroSection landing={landing} />}
