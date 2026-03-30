@@ -68,14 +68,17 @@ export function DateFilter({ value, onChange, className }: DateFilterProps) {
         <PopoverContent className="w-auto p-0" align="start">
           <Calendar
             mode="single"
-            selected={value ? new Date(value + "T00:00:00") : undefined}
+            selected={value ? new Date(value + "T12:00:00") : undefined}
             onSelect={(d) => {
               if (d) {
                 onChange(dateToMoscowISO(d));
                 setOpen(false);
               }
             }}
-            disabled={(d) => d < todayDate}
+            disabled={(d) => {
+              const dIso = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
+              return dIso < todayIso;
+            }}
             initialFocus
             className={cn("p-3 pointer-events-auto")}
           />
