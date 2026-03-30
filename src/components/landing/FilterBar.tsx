@@ -1,4 +1,5 @@
-import { RotateCcw, UtensilsCrossed, Music, Mic, Headphones, Sun } from "lucide-react";
+import { useState } from "react";
+import { RotateCcw, UtensilsCrossed, Music, Mic, Headphones, Sun, CalendarDays } from "lucide-react";
 import {
   Select,
   SelectContent,
@@ -6,6 +7,8 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import { Calendar } from "@/components/ui/calendar";
 
 import type { Amenity } from "@/components/landing/TripCard";
 import { AMENITY_META } from "@/components/landing/TripCard";
