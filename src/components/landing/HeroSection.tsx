@@ -46,7 +46,7 @@ export function HeroSection({ title, subtitle, totalTrips, totalSold, avgRating,
           <h1 className="text-3xl md:text-5xl font-extrabold text-primary-foreground leading-tight mb-4">
             {title}
           </h1>
-          <p className="text-base md:text-lg text-primary-foreground/80 mb-8 max-w-2xl leading-relaxed">
+          <p className="text-base md:text-lg text-primary-foreground/80 mb-8 max-w-3xl leading-relaxed">
             {subtitle}
           </p>
 
