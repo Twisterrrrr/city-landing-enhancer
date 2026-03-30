@@ -415,6 +415,7 @@ const DinnerCruise = () => {
   const landing = DINNER_CRUISE_CITIES["moscow"];
 
   const [filters, setFilters] = useState<DinnerFilterState>({
+    date: "",
     menuType: "",
     timeSlot: "",
     format: "",
