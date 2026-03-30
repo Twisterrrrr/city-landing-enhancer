@@ -490,7 +490,12 @@ const DinnerCruise = () => {
 
         <DinnerFilterBar filters={filters} onChange={setFilters} />
 
-        <div className="flex items-center gap-3 mt-6 mb-4">
+        <div className="flex items-center gap-3 mt-6 mb-4 flex-wrap">
+          {filters.date && (
+            <span className="inline-flex items-center gap-1.5 text-sm font-medium bg-primary/10 text-primary px-3 py-1 rounded-lg">
+              📅 {filters.date === defaultDate ? "Сегодня" : formatMoscowShort(filters.date)}
+            </span>
+          )}
           <span className="text-sm text-muted-foreground">
             {sorted.length > 0
               ? `${sorted.length} ${sorted.length === 1 ? "вариант" : sorted.length < 5 ? "варианта" : "вариантов"}`
