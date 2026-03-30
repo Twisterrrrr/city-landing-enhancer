@@ -143,6 +143,7 @@ export function SaluteFilterBar({ cities, filters, onChange }: SaluteFilterBarPr
       {/* Tablet (sm–lg): stacked rows */}
       <div className="hidden sm:block lg:hidden space-y-3">
         <div className="flex items-center gap-2 flex-wrap">
+          <Chip label="Все города" active={filters.city === ""} onClick={() => onChange({ ...filters, city: "" })} />
           {cities.map((c) => (
             <Chip key={c} label={c} active={filters.city === c} onClick={() => onChange({ ...filters, city: c })} />
           ))}
