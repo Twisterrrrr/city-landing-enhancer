@@ -122,15 +122,23 @@ export function DinnerFilterBar({ filters, onChange }: DinnerFilterBarProps) {
 
   return (
     <div className="space-y-3">
-      {/* Sort tabs — desktop */}
-      <div className="hidden sm:flex items-center gap-1 mb-2">
+      {/* Sort tabs — desktop/tablet */}
+      <div className="hidden sm:flex items-center gap-1 border-b border-border">
         {SORT_OPTIONS.map((o) => (
-          <Chip
+          <button
             key={o.value}
-            label={o.label}
-            active={filters.sort === o.value}
             onClick={() => set({ sort: o.value })}
-          />
+            className={`px-4 py-2.5 text-sm font-medium transition-colors relative ${
+              filters.sort === o.value
+                ? "text-primary"
+                : "text-muted-foreground hover:text-foreground"
+            }`}
+          >
+            {o.label}
+            {filters.sort === o.value && (
+              <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-primary rounded-full" />
+            )}
+          </button>
         ))}
       </div>
 
