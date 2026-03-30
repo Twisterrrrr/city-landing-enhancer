@@ -94,11 +94,6 @@ export function TripCard({ variant, isBest, index }: TripCardProps) {
               {variant.rating} ({variant.reviewCount})
             </span>
           </div>
-          {/* Seats under details */}
-          <div className={`flex items-center gap-1 text-xs font-medium ${urgencyClass}`}>
-            <Users className="w-3.5 h-3.5" />
-            {soldOut ? "Распродано" : `Осталось ${seatsLeft} мест`}
-          </div>
         </div>
 
         {/* Seats */}

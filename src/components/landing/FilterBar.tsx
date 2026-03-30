@@ -117,7 +117,7 @@ export function FilterBar({ dates, piers, filters, onChange }: FilterBarProps) {
             value={filters.pier || "all"}
             onValueChange={(v) => onChange({ ...filters, pier: v === "all" ? "" : v })}
           >
-            <SelectTrigger className="w-[180px] h-9 rounded-full text-sm">
+            <SelectTrigger className="w-[180px] h-9 rounded-lg text-sm">
               <SelectValue placeholder="Причал" />
             </SelectTrigger>
             <SelectContent>
