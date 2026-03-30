@@ -291,7 +291,7 @@ const RiverCruises = () => {
               <p className="text-xs text-muted-foreground">Рестораны на воде с сет-меню и фуршетами — премиум-круизы по {landing.cityNameDative}</p>
             </div>
             <Link
-              to={`/dinner-cruise/${landing.slug}`}
+              to={`/events/dinner-cruise/${landing.slug}`}
               className="px-4 py-2 rounded-lg text-sm font-semibold border border-primary text-primary hover:bg-primary/5 transition-colors whitespace-nowrap"
             >
               Смотреть ужины
