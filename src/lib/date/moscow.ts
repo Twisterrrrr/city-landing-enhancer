@@ -13,9 +13,9 @@ export function getMoscowTodayISO(): string {
 
 /** Returns tomorrow's date in Moscow as "yyyy-MM-dd" */
 export function getMoscowTomorrowISO(): string {
-  const parts = getMoscowTodayISO().split("-").map(Number);
-  const d = new Date(parts[0], parts[1] - 1, parts[2] + 1);
-  return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
+  // Add 24h in UTC then convert to MSK — safe regardless of local TZ
+  const tomorrow = new Date(Date.now() + 86_400_000);
+  return dateToMoscowISO(tomorrow);
 }
 
 /** Converts any Date (or ISO string) to "yyyy-MM-dd" in Moscow timezone */
