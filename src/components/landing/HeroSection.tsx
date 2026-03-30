@@ -28,7 +28,7 @@ export function HeroSection({ title, subtitle, totalTrips, totalSold, avgRating,
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
-          className="max-w-3xl"
+          className="max-w-4xl"
         >
           <nav className="flex items-center gap-2 text-sm text-primary-foreground/70 mb-6">
             {crumbs.map((c, i) => (
@@ -46,7 +46,7 @@ export function HeroSection({ title, subtitle, totalTrips, totalSold, avgRating,
           <h1 className="text-3xl md:text-5xl font-extrabold text-primary-foreground leading-tight mb-4">
             {title}
           </h1>
-          <p className="text-base md:text-lg text-primary-foreground/80 mb-8 max-w-2xl leading-relaxed">
+          <p className="text-base md:text-lg text-primary-foreground/80 mb-8 max-w-3xl leading-relaxed">
             {subtitle}
           </p>
 
