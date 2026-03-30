@@ -2,6 +2,7 @@ import type { LandingContent } from "@/data/salute-landings";
 
 export interface RiverCityLanding extends Omit<LandingContent, "slug"> {
   slug: string;
+  cityNameDative: string;
   riverName: string;
   piers: string[];
   seasons: string;
