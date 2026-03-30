@@ -44,6 +44,16 @@ const SORT_OPTIONS = [
   { value: "popular", label: "По рейтингу" },
 ];
 
+const ALL_AMENITIES: Amenity[] = ["food", "music", "guide", "audioguide", "deck"];
+
+const AMENITY_ICON_MAP: Record<Amenity, React.ReactNode> = {
+  food: <UtensilsCrossed className="w-4 h-4" />,
+  music: <Music className="w-4 h-4" />,
+  guide: <Mic className="w-4 h-4" />,
+  audioguide: <Headphones className="w-4 h-4" />,
+  deck: <Sun className="w-4 h-4" />,
+};
+
 function formatDateShort(iso: string): string {
   const d = new Date(iso + "T00:00:00");
   const now = new Date();
