@@ -1,6 +1,16 @@
 import { motion } from "framer-motion";
 import { Clock, MapPin, Ship, Star, Users, ArrowRight } from "lucide-react";
 
+export type Amenity = "food" | "music" | "guide" | "audioguide" | "deck";
+
+export const AMENITY_META: Record<Amenity, { icon: string; label: string }> = {
+  food: { icon: "UtensilsCrossed", label: "Еда и напитки" },
+  music: { icon: "Music", label: "Музыка/DJ" },
+  guide: { icon: "Mic", label: "Экскурсовод" },
+  audioguide: { icon: "Headphones", label: "Аудиогид" },
+  deck: { icon: "Sun", label: "Открытая палуба" },
+};
+
 export interface TripVariant {
   id: string;
   title: string;
@@ -13,6 +23,7 @@ export interface TripVariant {
   reviewCount: number;
   availableTickets: number;
   shipName?: string;
+  amenities?: Amenity[];
 }
 
 interface TripCardProps {

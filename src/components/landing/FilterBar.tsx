@@ -7,11 +7,15 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 
+import type { Amenity } from "@/components/landing/TripCard";
+import { AMENITY_META } from "@/components/landing/TripCard";
+
 export interface FilterState {
   date: string;
   timeSlot: string;
   pier: string;
   sort: string;
+  amenities: Amenity[];
 }
 
 interface FilterBarProps {
