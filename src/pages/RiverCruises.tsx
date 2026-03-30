@@ -9,7 +9,7 @@ import { ReviewsSection } from "@/components/landing/ReviewsSection";
 import { StickyHeader } from "@/components/landing/StickyHeader";
 import { CityIntroSection } from "@/components/salute/CityIntroSection";
 import { RIVER_CITIES, RIVER_CITY_NAMES, RIVER_SLUG_TO_CITY_NAME } from "@/data/river-landings";
-import { Shield, MapPin, Anchor } from "lucide-react";
+import { Shield, MapPin, Anchor, UtensilsCrossed } from "lucide-react";
 
 // ─── MOCK DATA ──────────────────────────────────────────────
 
