@@ -190,15 +190,14 @@ export function FilterBar({ dates, piers, filters, onChange }: FilterBarProps) {
           </Select>
         </div>
 
-        {/* Row 2: time + pier selects */}
+        {/* Row 2: time + pier selects + amenity icons */}
         <div className="flex items-center gap-2">
           <TimeSelect filters={filters} onChange={onChange} />
           <PierSelect filters={filters} onChange={onChange} piers={piers} />
-        </div>
-
-        {/* Row 3: amenity icons */}
-        <div className="flex items-center gap-1.5">
-          <AmenityIcons filters={filters} toggleAmenity={toggleAmenity} />
+          <div className="w-px h-6 bg-border mx-1" />
+          <div className="flex items-center gap-1.5">
+            <AmenityIcons filters={filters} toggleAmenity={toggleAmenity} />
+          </div>
           <ResetButton filters={filters} onChange={onChange} />
         </div>
       </div>
