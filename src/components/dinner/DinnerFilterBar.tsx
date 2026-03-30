@@ -90,13 +90,7 @@ function ResetButton({
   filters: DinnerFilterState;
   onChange: (f: DinnerFilterState) => void;
 }) {
-  const todayIso = (() => {
-    const msk = new Date(new Date().toLocaleString("en-US", { timeZone: "Europe/Moscow" }));
-    const y = msk.getFullYear();
-    const m = String(msk.getMonth() + 1).padStart(2, "0");
-    const d = String(msk.getDate()).padStart(2, "0");
-    return `${y}-${m}-${d}`;
-  })();
+  const todayIso = getMoscowTodayISO();
   const hasFilters =
     filters.menuType || filters.timeSlot || filters.format || filters.maxPrice ||
     (filters.date && filters.date !== todayIso);

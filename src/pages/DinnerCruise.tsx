@@ -415,14 +415,7 @@ function pickBest(variants: DinnerCruiseVariant[]): number | null {
 const DinnerCruise = () => {
   const landing = DINNER_CRUISE_CITIES["moscow"];
 
-  // Default date = today in Moscow timezone
-  const defaultDate = useMemo(() => {
-    const msk = new Date(new Date().toLocaleString("en-US", { timeZone: "Europe/Moscow" }));
-    const y = msk.getFullYear();
-    const m = String(msk.getMonth() + 1).padStart(2, "0");
-    const d = String(msk.getDate()).padStart(2, "0");
-    return `${y}-${m}-${d}`;
-  }, []);
+  const defaultDate = getMoscowTodayISO();
 
   const [filters, setFilters] = useState<DinnerFilterState>({
     date: defaultDate,
@@ -435,13 +428,8 @@ const DinnerCruise = () => {
 
   const filtered = useMemo(() => {
     return DINNER_CRUISE_MOCK.filter((v) => {
-      // Date filter: compare calendar day in Moscow timezone
       if (filters.date) {
-        const eventMsk = new Date(new Date(v.startsAt).toLocaleString("en-US", { timeZone: "Europe/Moscow" }));
-        const ey = eventMsk.getFullYear();
-        const em = String(eventMsk.getMonth() + 1).padStart(2, "0");
-        const ed = String(eventMsk.getDate()).padStart(2, "0");
-        const eventDay = `${ey}-${em}-${ed}`;
+        const eventDay = dateToMoscowISO(v.startsAt);
         if (eventDay !== filters.date) return false;
       }
       if (filters.menuType && v.menuType !== filters.menuType) return false;
