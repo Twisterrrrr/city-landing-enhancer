@@ -122,6 +122,7 @@ export function SaluteFilterBar({ cities, filters, onChange }: SaluteFilterBarPr
 
       {/* Desktop (lg+): single row */}
       <div className="hidden lg:flex flex-wrap items-center gap-2">
+        <Chip label="Все города" active={filters.city === ""} onClick={() => onChange({ ...filters, city: "" })} />
         {cities.map((c) => (
           <Chip key={c} label={c} active={filters.city === c} onClick={() => onChange({ ...filters, city: c })} />
         ))}
