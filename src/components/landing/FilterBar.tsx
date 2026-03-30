@@ -235,11 +235,11 @@ export function FilterBar({ dates, piers, filters, onChange }: FilterBarProps) {
           ))}
           <Select
             value={filters.date && !dates.slice(0, 2).includes(filters.date) ? filters.date : "pick"}
-            onValueChange={(v) => onChange({ ...filters, date: v === "pick" ? "" : v })}
+            onValueChange={(v) => { if (v !== "pick") onChange({ ...filters, date: v }); }}
           >
-            <SelectTrigger className="w-[140px] h-9 rounded-lg text-sm"><SelectValue placeholder="Выбрать дату" /></SelectTrigger>
+            <SelectTrigger className="w-[140px] h-9 rounded-lg text-sm"><SelectValue placeholder="Другая дата" /></SelectTrigger>
             <SelectContent>
-              <SelectItem value="pick">Все даты</SelectItem>
+              <SelectItem value="pick">Другая дата</SelectItem>
               {dates.slice(2).map((d) => <SelectItem key={d} value={d}>{formatDateShort(d)}</SelectItem>)}
             </SelectContent>
           </Select>
