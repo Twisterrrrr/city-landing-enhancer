@@ -110,55 +110,22 @@ export function FilterBar({ dates, piers, filters, onChange }: FilterBarProps) {
         ))}
       </div>
 
-      {/* Date row: Сегодня / Завтра chips + "Выбрать дату" select for other dates */}
-      {(() => {
-        const now = new Date();
-        const todayIso = now.toISOString().slice(0, 10);
-        const tomorrowIso = new Date(now.getTime() + 86400000).toISOString().slice(0, 10);
-        const quickDates = dates.filter((d) => d === todayIso || d === tomorrowIso);
-        const otherDates = dates.filter((d) => d !== todayIso && d !== tomorrowIso);
-        const isOtherSelected = filters.date && !quickDates.includes(filters.date);
+      {/* Filters row */}
+      <div className="flex flex-wrap items-center gap-2">
+        {/* Date chips */}
+        <Chip label="Все даты" active={!filters.date} onClick={() => onChange({ ...filters, date: "" })} />
+        {dates.map((d) => (
+          <Chip key={d} label={formatDateShort(d)} active={filters.date === d} onClick={() => onChange({ ...filters, date: d })} />
+        ))}
 
-        return (
-          <div className="flex items-center gap-1.5 sm:gap-2">
-            {quickDates.map((d) => (
-              <Chip
-                key={d}
-                label={formatDateShort(d)}
-                active={filters.date === d}
-                onClick={() => onChange({ ...filters, date: filters.date === d ? "" : d })}
-              />
-            ))}
-            {otherDates.length > 0 && (
-              <Select
-                value={isOtherSelected ? filters.date : ""}
-                onValueChange={(v) => onChange({ ...filters, date: v })}
-              >
-                <SelectTrigger className={`w-[150px] h-9 rounded-lg text-sm border ${
-                  isOtherSelected ? "border-primary bg-primary text-primary-foreground" : ""
-                }`}>
-                  <SelectValue placeholder="Выбрать дату" />
-                </SelectTrigger>
-                <SelectContent>
-                  {otherDates.map((d) => (
-                    <SelectItem key={d} value={d}>
-                      {formatDateShort(d)}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            )}
-          </div>
-        );
-      })()}
+        <div className="w-px h-6 bg-border mx-1 hidden sm:block" />
 
-      {/* Time + Pier selects */}
-      <div className="flex items-center gap-2">
+        {/* Time select */}
         <Select
           value={filters.timeSlot || "all"}
           onValueChange={(v) => onChange({ ...filters, timeSlot: v === "all" ? "" : v })}
         >
-          <SelectTrigger className="flex-1 sm:w-[160px] sm:flex-none h-9 rounded-lg text-sm">
+          <SelectTrigger className="w-[160px] h-9 rounded-lg text-sm">
             <SelectValue placeholder="Время" />
           </SelectTrigger>
           <SelectContent>
@@ -170,12 +137,13 @@ export function FilterBar({ dates, piers, filters, onChange }: FilterBarProps) {
           </SelectContent>
         </Select>
 
+        {/* Pier select */}
         {piers.length > 0 && (
           <Select
             value={filters.pier || "all"}
             onValueChange={(v) => onChange({ ...filters, pier: v === "all" ? "" : v })}
           >
-            <SelectTrigger className="flex-1 sm:w-[180px] sm:flex-none h-9 rounded-lg text-sm">
+            <SelectTrigger className="w-[180px] h-9 rounded-lg text-sm">
               <SelectValue placeholder="Причал" />
             </SelectTrigger>
             <SelectContent>
@@ -188,10 +156,10 @@ export function FilterBar({ dates, piers, filters, onChange }: FilterBarProps) {
             </SelectContent>
           </Select>
         )}
-      </div>
 
-      {/* Amenity icons + reset */}
-      <div className="flex items-center gap-2">
+        <div className="w-px h-6 bg-border mx-1 hidden sm:block" />
+
+        {/* Amenity filter — icon chips */}
         <div className="flex items-center gap-1.5">
           {ALL_AMENITIES.map((a) => {
             const active = filters.amenities.includes(a);
