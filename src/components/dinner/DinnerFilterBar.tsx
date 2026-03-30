@@ -10,6 +10,7 @@ import { DateFilter } from "@/components/filters/DateFilter";
 import { UtensilsCrossed, Wine, Clock, Sun, Moon } from "lucide-react";
 
 export interface DinnerFilterState {
+  date: string;
   menuType: string;      // "" | "set" | "buffet"
   timeSlot: string;      // "" | "sunset" | "night"
   format: string;        // "" | "romantic" | "panoramic" | "vip" | "classic"
