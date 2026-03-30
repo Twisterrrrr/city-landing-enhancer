@@ -30,7 +30,7 @@ export function HeroSection({ title, subtitle, totalTrips, totalSold, avgRating,
           transition={{ duration: 0.5 }}
           className="max-w-4xl"
         >
-          <nav className="flex items-center gap-2 text-sm text-primary-foreground/70 mb-6">
+          <nav className="flex flex-wrap items-center gap-2 text-sm text-primary-foreground/70 mb-6">
             {crumbs.map((c, i) => (
               <span key={i} className="flex items-center gap-2">
                 {i > 0 && <span>/</span>}
