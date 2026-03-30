@@ -1,5 +1,6 @@
 import { useMemo, useState, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
+import { DINNER_CRUISE_CITIES } from "@/data/dinner-cruise-landings";
 import { HeroSection } from "@/components/landing/HeroSection";
 import { RiverFilterBar, type RiverFilterState } from "@/components/river/RiverFilterBar";
 import { TripCard, type TripVariant } from "@/components/landing/TripCard";
