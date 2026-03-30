@@ -8,16 +8,16 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import {
-  getMoscowTodayISO,
-  getMoscowTomorrowISO,
-  dateToMoscowISO,
-  getMoscowTodayDate,
-  formatMoscowShort,
+  getTodayISO,
+  getTomorrowISO,
+  dateToISO,
+  formatShortDate,
 } from "@/lib/date/moscow";
 
 interface DateFilterProps {
   value: string; // ISO date string or ""
   onChange: (date: string) => void;
+  timezone?: string; // IANA timezone, defaults to Europe/Moscow
   className?: string;
 }
 
@@ -29,16 +29,15 @@ function chipClass(active: boolean) {
   }`;
 }
 
-export function DateFilter({ value, onChange, className }: DateFilterProps) {
+export function DateFilter({ value, onChange, timezone, className }: DateFilterProps) {
   const [open, setOpen] = useState(false);
-  const todayIso = getMoscowTodayISO();
-  const tomorrowIso = getMoscowTomorrowISO();
-  const todayDate = getMoscowTodayDate();
+  const todayIso = getTodayISO(timezone);
+  const tomorrowIso = getTomorrowISO(timezone);
 
   const isCustom = value && value !== todayIso && value !== tomorrowIso;
 
   const customLabel = isCustom
-    ? formatMoscowShort(value)
+    ? formatShortDate(value)
     : "Другая дата";
 
   return (
@@ -71,7 +70,7 @@ export function DateFilter({ value, onChange, className }: DateFilterProps) {
             selected={isCustom ? new Date(value + "T12:00:00") : undefined}
             onSelect={(d) => {
               if (d) {
-                onChange(dateToMoscowISO(d));
+                onChange(dateToISO(d, timezone));
                 setOpen(false);
               }
             }}
