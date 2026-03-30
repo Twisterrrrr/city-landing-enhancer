@@ -6,9 +6,11 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { DateFilter } from "@/components/filters/DateFilter";
 import { UtensilsCrossed, Wine, Clock, Sun, Moon } from "lucide-react";
 
 export interface DinnerFilterState {
+  date: string;
   menuType: string;      // "" | "set" | "buffet"
   timeSlot: string;      // "" | "sunset" | "night"
   format: string;        // "" | "romantic" | "panoramic" | "vip" | "classic"
@@ -130,6 +132,8 @@ export function DinnerFilterBar({ filters, onChange }: DinnerFilterBarProps) {
 
       {/* Desktop */}
       <div className="hidden lg:flex items-center gap-2 flex-wrap">
+        <DateFilter value={filters.date} onChange={(d) => set({ date: d })} />
+        <div className="w-px h-6 bg-border mx-1" />
         <div className="flex items-center gap-1.5">
           <UtensilsCrossed className="w-4 h-4 text-muted-foreground" />
           {MENU_TYPES.map((m) => (
@@ -203,6 +207,7 @@ export function DinnerFilterBar({ filters, onChange }: DinnerFilterBarProps) {
 
       {/* Mobile / Tablet */}
       <div className="lg:hidden space-y-2">
+        <DateFilter value={filters.date} onChange={(d) => set({ date: d })} />
         {isMobile && (
           <Select
             value={filters.sort}
