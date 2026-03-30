@@ -442,26 +442,6 @@ const DinnerCruise = () => {
 
   const bestIdx = useMemo(() => pickBest(sorted), [sorted]);
 
-  if (!landing) {
-    return (
-      <div className="min-h-screen bg-background flex items-center justify-center">
-        <div className="text-center space-y-4">
-          <h1 className="text-2xl font-bold text-foreground">
-            Ужин на теплоходе
-          </h1>
-          <p className="text-muted-foreground">
-            Выберите город для просмотра предложений
-          </p>
-          <Link
-            to="/dinner-cruise/moscow"
-            className="inline-flex px-5 py-2.5 rounded-lg bg-primary text-primary-foreground font-semibold hover:bg-primary/90 transition-colors"
-          >
-            Москва
-          </Link>
-        </div>
-      </div>
-    );
-  }
 
   return (
     <div className="min-h-screen bg-background">
