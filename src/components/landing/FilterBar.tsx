@@ -145,7 +145,7 @@ export function FilterBar({ dates, piers, filters, onChange }: FilterBarProps) {
           </button>
         ))}
       </div>
-
+import { DateFilter } from "@/components/filters/DateFilter";
 
       <div className="hidden lg:flex flex-wrap items-center gap-2">
         <DateFilter value={filters.date} onChange={(d) => onChange({ ...filters, date: d })} />
