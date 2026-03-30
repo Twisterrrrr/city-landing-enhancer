@@ -157,10 +157,12 @@ export function TripCard({ variant, isBest, index }: TripCardProps) {
 
         {/* Seats + Button row */}
         <div className="flex items-center justify-between gap-3">
-          <div className={`flex items-center gap-1 text-xs font-medium ${urgencyClass}`}>
-            <Users className="w-3 h-3" />
-            {soldOut ? "Распродано" : `Осталось ${seatsLeft}`}
-          </div>
+          {!soldOut ? (
+            <div className={`flex items-center gap-1 text-xs font-medium ${urgencyClass}`}>
+              <Users className="w-3 h-3" />
+              Осталось {seatsLeft}
+            </div>
+          ) : <div />}
           <button
             disabled={soldOut}
             className={`inline-flex items-center gap-1.5 px-4 py-2 rounded-lg text-sm font-semibold transition-all ${
