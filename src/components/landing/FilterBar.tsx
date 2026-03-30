@@ -159,8 +159,8 @@ export function FilterBar({ dates, piers, filters, onChange }: FilterBarProps) {
 
         <div className="w-px h-6 bg-border mx-1 hidden sm:block" />
 
-        {/* Amenity filter — desktop: icon chips */}
-        <div className="hidden md:flex items-center gap-1.5">
+        {/* Amenity filter — icon chips */}
+        <div className="flex items-center gap-1.5">
           {ALL_AMENITIES.map((a) => {
             const active = filters.amenities.includes(a);
             return (
