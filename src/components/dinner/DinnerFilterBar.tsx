@@ -132,6 +132,8 @@ export function DinnerFilterBar({ filters, onChange }: DinnerFilterBarProps) {
 
       {/* Desktop */}
       <div className="hidden lg:flex items-center gap-2 flex-wrap">
+        <DateFilter value={filters.date} onChange={(d) => set({ date: d })} />
+        <div className="w-px h-6 bg-border mx-1" />
         <div className="flex items-center gap-1.5">
           <UtensilsCrossed className="w-4 h-4 text-muted-foreground" />
           {MENU_TYPES.map((m) => (
