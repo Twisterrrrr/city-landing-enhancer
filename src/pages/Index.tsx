@@ -98,7 +98,7 @@ function matchTimeSlot(iso: string, slot: string): boolean {
 
 const Index = () => {
   const [filters, setFilters] = useState<FilterState>({
-    date: "",
+    date: DATES[0],
     timeSlot: "",
     pier: "",
     sort: "time",
