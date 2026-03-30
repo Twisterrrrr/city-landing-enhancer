@@ -1,4 +1,5 @@
-import { useMemo, useState } from "react";
+import { useMemo, useState, useEffect } from "react";
+import { useParams, Link } from "react-router-dom";
 import { HeroSection } from "@/components/landing/HeroSection";
 import { SaluteFilterBar, type SaluteFilterState } from "@/components/salute/SaluteFilterBar";
 import { TripCard, type TripVariant } from "@/components/landing/TripCard";
@@ -6,7 +7,9 @@ import { FaqSection } from "@/components/landing/FaqSection";
 import { ReviewsSection } from "@/components/landing/ReviewsSection";
 import { StickyHeader } from "@/components/landing/StickyHeader";
 import { SaluteHowToChoose } from "@/components/salute/SaluteHowToChoose";
-import { Shield } from "lucide-react";
+import { CityIntroSection } from "@/components/salute/CityIntroSection";
+import { CITY_LANDINGS, SLUG_TO_CITY_NAME, CITY_NAME_TO_SLUG } from "@/data/salute-landings";
+import { Shield, MapPin } from "lucide-react";
 
 // ─── MOCK DATA ──────────────────────────────────────────────
 
@@ -34,7 +37,7 @@ const MOCK_VARIANTS: SaluteVariant[] = [
   { id: "s12", title: "Речной круиз «Праздничный вечер» — СПб", startsAt: "2026-05-09T19:00:00+03:00", durationMinutes: 180, pier: "Английская наб.", price: 2990, rating: 4.8, reviewCount: 189, availableTickets: 3, shipName: "Царица Невы", amenities: ["food", "music", "guide", "deck"], city: "Санкт-Петербург", transport: "river" },
 ];
 
-const FAQ_ITEMS = [
+const DEFAULT_FAQ = [
   { question: "Во сколько начинается салют 9 мая?", answer: "В большинстве городов праздничный салют начинается в 22:00. В Москве — традиционно 30 залпов с нескольких площадок одновременно. Рекомендуем выбирать рейсы, стартующие в 20:00–21:00." },
   { question: "Откуда лучше всего смотреть салют?", answer: "С воды — самый зрелищный вид: панорамный обзор, никаких деревьев и зданий. Автобусные туры привозят к лучшим смотровым площадкам. Авто-туры — максимальная гибкость маршрута." },
   { question: "Можно ли с детьми?", answer: "Да! Речные и автобусные экскурсии подходят для семей. Детские билеты обычно со скидкой 30–50%. На теплоходах есть крытые зоны." },
@@ -77,15 +80,99 @@ function pickOptimal(variants: TripVariant[]): number | null {
   return bestIdx >= 0 ? bestIdx : null;
 }
 
+// ─── JSON-LD ────────────────────────────────────────────────
+
+function EventJsonLd({ variants, cityName }: { variants: SaluteVariant[]; cityName?: string }) {
+  const events = variants.filter((v) => v.availableTickets > 0).slice(0, 5).map((v) => ({
+    "@context": "https://schema.org",
+    "@type": "Event",
+    name: v.title,
+    startDate: v.startsAt,
+    location: {
+      "@type": "Place",
+      name: v.pier,
+      address: { "@type": "PostalAddress", addressLocality: v.city, addressCountry: "RU" },
+    },
+    offers: {
+      "@type": "Offer",
+      price: v.price,
+      priceCurrency: "RUB",
+      availability: v.availableTickets > 0 ? "https://schema.org/InStock" : "https://schema.org/SoldOut",
+    },
+    description: `Салют 9 мая${cityName ? ` в ${cityName}` : ""} — ${v.title}`,
+  }));
+
+  return (
+    <script
+      type="application/ld+json"
+      dangerouslySetInnerHTML={{ __html: JSON.stringify(events.length === 1 ? events[0] : events) }}
+    />
+  );
+}
+
+// ─── SEO HEAD ───────────────────────────────────────────────
+
+function SeoHead({ title, description }: { title: string; description: string }) {
+  useEffect(() => {
+    document.title = title;
+    const metaDesc = document.querySelector('meta[name="description"]');
+    if (metaDesc) {
+      metaDesc.setAttribute("content", description);
+    } else {
+      const m = document.createElement("meta");
+      m.name = "description";
+      m.content = description;
+      document.head.appendChild(m);
+    }
+  }, [title, description]);
+  return null;
+}
+
+// ─── FALLBACK: OTHER CITIES ─────────────────────────────────
+
+function OtherCitiesBlock({ currentCity }: { currentCity: string }) {
+  const otherSlugs = Object.entries(CITY_LANDINGS).filter(
+    ([, l]) => l.cityName !== currentCity
+  );
+  if (otherSlugs.length === 0) return null;
+
+  return (
+    <div className="rounded-xl border border-border bg-card p-6 space-y-4">
+      <h3 className="text-lg font-semibold text-foreground">Салют 9 мая в других городах</h3>
+      <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-3">
+        {otherSlugs.map(([, l]) => (
+          <Link
+            key={l.slug}
+            to={`/salute-9-may/${l.slug}`}
+            className="flex items-center gap-2 rounded-lg border border-border p-3 hover:border-primary/40 transition-colors"
+          >
+            <MapPin className="w-4 h-4 text-primary shrink-0" />
+            <span className="text-sm font-medium text-foreground">{l.cityName}</span>
+          </Link>
+        ))}
+      </div>
+    </div>
+  );
+}
+
 // ─── PAGE ───────────────────────────────────────────────────
 
 const Salute = () => {
+  const { city: citySlug } = useParams<{ city?: string }>();
+  const cityName = citySlug ? SLUG_TO_CITY_NAME[citySlug] : undefined;
+  const landing = citySlug ? CITY_LANDINGS[citySlug] : undefined;
+
   const [filters, setFilters] = useState<SaluteFilterState>({
-    city: "",
+    city: cityName || "",
     transport: "",
     sort: "price",
     amenities: [],
   });
+
+  // Sync filter city when URL changes
+  useEffect(() => {
+    setFilters((f) => ({ ...f, city: cityName || "" }));
+  }, [cityName]);
 
   const filtered = useMemo(() => {
     return MOCK_VARIANTS.filter((v) => {
@@ -110,21 +197,33 @@ const Salute = () => {
 
   const bestIdx = useMemo(() => pickOptimal(sorted), [sorted]);
 
+  const seoTitle = landing?.seoTitle || "Салют 9 мая — лучшие точки обзора и экскурсии";
+  const seoDesc = landing?.seoDescription || "Посмотрите праздничный салют с воды, автобуса, авто или мотоколонны. Сравните предложения от проверенных организаторов.";
+  const heroTitle = landing?.heroTitle || "Салют 9 мая — лучшие точки обзора";
+  const heroSubtitle = landing?.heroSubtitle || "Посмотрите праздничный салют с воды, автобуса, авто или мотоколонны. Сравните предложения от проверенных организаторов в вашем городе.";
+  const faqItems = landing?.faq || DEFAULT_FAQ;
+  const isLowResults = sorted.filter((v) => v.availableTickets > 0).length < 3;
+
   return (
     <div className="min-h-screen bg-background">
+      <SeoHead title={seoTitle} description={seoDesc} />
+      <EventJsonLd variants={sorted as SaluteVariant[]} cityName={landing?.cityName} />
       <StickyHeader />
 
       <HeroSection
-        title="Салют 9 мая — лучшие точки обзора"
-        subtitle="Посмотрите праздничный салют с воды, автобуса, авто или мотоколонны. Сравните предложения от проверенных организаторов в вашем городе."
+        title={heroTitle}
+        subtitle={heroSubtitle}
         totalTrips={MOCK_VARIANTS.length}
         totalSold={8340}
         avgRating={4.7}
       />
 
+      {/* City-specific intro */}
+      {landing && <CityIntroSection landing={landing} />}
+
       <section id="variants" className="container mx-auto px-4 py-12">
         <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-6">
-          Расписание экскурсий
+          Расписание экскурсий{landing ? ` — ${landing.cityName}` : ""}
         </h2>
 
         <SaluteFilterBar
@@ -155,12 +254,61 @@ const Salute = () => {
             <p className="text-muted-foreground">Попробуйте изменить фильтры</p>
           </div>
         )}
+
+        {/* Fallback: free viewpoints when few results */}
+        {isLowResults && landing && (
+          <div className="mt-8 rounded-xl border border-border bg-card p-6 space-y-3">
+            <h3 className="text-lg font-semibold text-foreground flex items-center gap-2">
+              <MapPin className="w-5 h-5 text-primary" />
+              Бесплатные точки обзора — {landing.cityName}
+            </h3>
+            <ul className="space-y-2">
+              {landing.viewpoints.filter((vp) => vp.isFree).map((vp) => (
+                <li key={vp.name} className="flex items-start gap-2">
+                  <span className="w-1.5 h-1.5 rounded-full bg-primary mt-2 shrink-0" />
+                  <div>
+                    <span className="font-medium text-foreground text-sm">{vp.name}</span>
+                    <span className="text-sm text-muted-foreground"> — {vp.description}</span>
+                  </div>
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
+
+        {/* Other cities links */}
+        {landing && (
+          <div className="mt-8">
+            <OtherCitiesBlock currentCity={landing.cityName} />
+          </div>
+        )}
       </section>
 
       <div className="container mx-auto px-4">
         <SaluteHowToChoose />
-        <FaqSection items={FAQ_ITEMS} />
+        <FaqSection items={faqItems} />
         <ReviewsSection items={REVIEWS} />
+
+        {/* Other cities at bottom for non-city pages */}
+        {!landing && (
+          <div className="py-8">
+            <div className="rounded-xl border border-border bg-card p-6 space-y-4">
+              <h3 className="text-lg font-semibold text-foreground">Салют 9 мая по городам</h3>
+              <div className="grid sm:grid-cols-2 md:grid-cols-4 gap-3">
+                {Object.values(CITY_LANDINGS).map((l) => (
+                  <Link
+                    key={l.slug}
+                    to={`/salute-9-may/${l.slug}`}
+                    className="flex items-center gap-2 rounded-lg border border-border p-3 hover:border-primary/40 transition-colors"
+                  >
+                    <MapPin className="w-4 h-4 text-primary shrink-0" />
+                    <span className="text-sm font-medium text-foreground">{l.cityName}</span>
+                  </Link>
+                ))}
+              </div>
+            </div>
+          </div>
+        )}
 
         <div className="py-12 text-center">
           <div className="flex items-center justify-center gap-2 text-sm text-muted-foreground">
