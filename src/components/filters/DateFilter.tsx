@@ -38,7 +38,7 @@ export function DateFilter({ value, onChange, className }: DateFilterProps) {
   const isCustom = value && value !== todayIso && value !== tomorrowIso;
 
   const customLabel = isCustom
-    ? format(new Date(value + "T00:00:00"), "d MMM", { locale: ru })
+    ? formatMoscowShort(value)
     : "Другая дата";
 
   return (
