@@ -7,7 +7,8 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { DateFilter } from "@/components/filters/DateFilter";
-import { UtensilsCrossed, Wine, Clock, Sun, Moon } from "lucide-react";
+import { getMoscowTodayISO } from "@/lib/date/moscow";
+import { UtensilsCrossed, Clock, Sun, Moon } from "lucide-react";
 
 export interface DinnerFilterState {
   date: string;
