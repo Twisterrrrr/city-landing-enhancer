@@ -23,6 +23,7 @@ export interface DinnerCruiseLanding {
   cityName: string;
   cityNameDative: string;
   riverName: string;
+  riverNameDative: string;
   seoTitle: string;
   seoDescription: string;
   heroSubtitle: string;
