@@ -156,9 +156,10 @@ export function FilterBar({ dates, piers, filters, onChange }: FilterBarProps) {
       </div>
 
       {/* Sort select — mobile */}
-      <div className="sm:hidden">
+      <div className="sm:hidden flex items-center gap-2">
+        <span className="text-sm text-muted-foreground whitespace-nowrap">Сортировать:</span>
         <Select value={filters.sort} onValueChange={(v) => onChange({ ...filters, sort: v })}>
-          <SelectTrigger className="w-full h-9 rounded-lg text-sm">
+          <SelectTrigger className="flex-1 h-9 rounded-lg text-sm">
             <SelectValue placeholder="Сортировка" />
           </SelectTrigger>
           <SelectContent>
