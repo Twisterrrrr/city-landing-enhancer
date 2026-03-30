@@ -18,6 +18,12 @@ const addDays = (n: number) => new Date(today.getTime() + n * 86400000);
 const DATES = [fmt(today), fmt(addDays(1)), fmt(addDays(2)), fmt(addDays(3))];
 const PIERS = ["наб. Мойки", "Дворцовая наб.", "Английская наб."];
 
+const PIER_COORDS: Record<string, GeoPosition> = {
+  "наб. Мойки": { lat: 59.9400, lng: 30.3200 },
+  "Дворцовая наб.": { lat: 59.9408, lng: 30.3131 },
+  "Английская наб.": { lat: 59.9330, lng: 30.2880 },
+};
+
 function mockISO(dateStr: string, h: number, m: number): string {
   return `${dateStr}T${String(h).padStart(2, "0")}:${String(m).padStart(2, "0")}:00+03:00`;
 }
