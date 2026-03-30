@@ -94,10 +94,10 @@ function AmenityIcons({ filters, toggleAmenity }: { filters: FilterState; toggle
 }
 
 function ResetButton({ filters, onChange }: { filters: FilterState; onChange: (f: FilterState) => void }) {
-  const hasFilters = filters.date || filters.timeSlot || filters.pier || filters.amenities.length > 0;
+  const hasFilters = filters.timeSlot || filters.pier || filters.amenities.length > 0;
   if (!hasFilters) return null;
   return (
-    <button onClick={() => onChange({ ...filters, date: "", timeSlot: "", pier: "", amenities: [] })}
+    <button onClick={() => onChange({ ...filters, timeSlot: "", pier: "", amenities: [] })}
       className="ml-auto flex items-center gap-1 text-sm text-muted-foreground hover:text-foreground transition-colors">
       <RotateCcw className="w-3.5 h-3.5" />Сбросить
     </button>
