@@ -459,8 +459,7 @@ const DinnerCruise = () => {
         breadcrumbs={[
           { label: "Главная", href: "/" },
           { label: "Речные прогулки", href: `/river-cruises/${landing.slug}` },
-          { label: "Ужин на теплоходе", href: "/events/dinner-cruise/moscow" },
-          { label: landing.cityName },
+          { label: `Ужин на теплоходе — ${landing.cityName}` },
         ]}
       />
 
