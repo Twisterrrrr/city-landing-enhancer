@@ -1,5 +1,4 @@
-import { useState } from "react";
-import { RotateCcw, UtensilsCrossed, Music, Mic, Headphones, Sun, CalendarDays } from "lucide-react";
+import { RotateCcw, UtensilsCrossed, Music, Mic, Headphones, Sun } from "lucide-react";
 import {
   Select,
   SelectContent,
@@ -7,8 +6,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
-import { Calendar } from "@/components/ui/calendar";
 
 import type { Amenity } from "@/components/landing/TripCard";
 import { AMENITY_META } from "@/components/landing/TripCard";
@@ -107,7 +104,7 @@ function ResetButton({ filters, onChange }: { filters: FilterState; onChange: (f
   );
 }
 
-function TimeSelect({ filters, onChange }: { filters: FilterState; onChange: (f: FilterState) => void }) {
+function TimeSelect({ filters, onChange }: { filters: FilterState; onChange: (f: FilterState) => void; className?: string }) {
   return (
     <Select value={filters.timeSlot || "all"} onValueChange={(v) => onChange({ ...filters, timeSlot: v === "all" ? "" : v })}>
       <SelectTrigger className="w-[160px] h-9 rounded-lg text-sm"><SelectValue placeholder="Любое время" /></SelectTrigger>
@@ -126,44 +123,6 @@ function PierSelect({ filters, onChange, piers }: { filters: FilterState; onChan
         {piers.map((p) => <SelectItem key={p} value={p}>{p}</SelectItem>)}
       </SelectContent>
     </Select>
-  );
-}
-
-function DatePickerButton({ filters, onChange, dates }: { filters: FilterState; onChange: (f: FilterState) => void; dates: string[] }) {
-  const [open, setOpen] = useState(false);
-  const selectedDate = filters.date && !dates.includes(filters.date) ? new Date(filters.date + "T00:00:00") : undefined;
-  const isCustomDate = filters.date && !dates.includes(filters.date);
-
-  return (
-    <Popover open={open} onOpenChange={setOpen}>
-      <PopoverTrigger asChild>
-        <button
-          className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-sm font-normal transition-all whitespace-nowrap border ${
-            isCustomDate
-              ? "bg-primary text-primary-foreground border-primary"
-              : "bg-background text-foreground border-border hover:border-primary/40 hover:text-primary"
-          }`}
-        >
-          <CalendarDays className="w-4 h-4" />
-          {isCustomDate ? formatDateShort(filters.date) : "Другая дата"}
-        </button>
-      </PopoverTrigger>
-      <PopoverContent className="w-auto p-0" align="start">
-        <Calendar
-          mode="single"
-          selected={selectedDate}
-          onSelect={(day) => {
-            if (day) {
-              const iso = day.toISOString().slice(0, 10);
-              onChange({ ...filters, date: iso });
-            }
-            setOpen(false);
-          }}
-          disabled={(day) => day < new Date(new Date().setHours(0, 0, 0, 0))}
-          initialFocus
-        />
-      </PopoverContent>
-    </Popover>
   );
 }
 
@@ -196,12 +155,22 @@ export function FilterBar({ dates, piers, filters, onChange }: FilterBarProps) {
         ))}
       </div>
 
+
       {/* Desktop (lg+): single row */}
       <div className="hidden lg:flex flex-wrap items-center gap-2">
         {dates.map((d) => (
           <Chip key={d} label={formatDateShort(d)} active={filters.date === d} onClick={() => onChange({ ...filters, date: d })} />
         ))}
-        <DatePickerButton filters={filters} onChange={onChange} dates={dates} />
+        <Select
+          value={filters.date && !dates.includes(filters.date) ? filters.date : "pick"}
+          onValueChange={(v) => { if (v !== "pick") onChange({ ...filters, date: v }); }}
+        >
+          <SelectTrigger className="w-[150px] h-9 rounded-lg text-sm"><SelectValue placeholder="Другая дата" /></SelectTrigger>
+          <SelectContent>
+            <SelectItem value="pick">Другая дата</SelectItem>
+            {dates.map((d) => <SelectItem key={d} value={d}>{formatDateShort(d)}</SelectItem>)}
+          </SelectContent>
+        </Select>
         <div className="w-px h-6 bg-border mx-1" />
         <TimeSelect filters={filters} onChange={onChange} />
         <PierSelect filters={filters} onChange={onChange} piers={piers} />
@@ -214,12 +183,21 @@ export function FilterBar({ dates, piers, filters, onChange }: FilterBarProps) {
 
       {/* Tablet (sm–lg): stacked rows */}
       <div className="hidden sm:block lg:hidden space-y-3">
-        {/* Row 1: date chips + calendar picker */}
+        {/* Row 1: date chips + "Выбрать дату" select */}
         <div className="flex items-center gap-2 flex-wrap">
           {dates.map((d) => (
             <Chip key={d} label={formatDateShort(d)} active={filters.date === d} onClick={() => onChange({ ...filters, date: d })} />
           ))}
-          <DatePickerButton filters={filters} onChange={onChange} dates={dates} />
+          <Select
+            value={filters.date && !dates.includes(filters.date) ? filters.date : "pick"}
+            onValueChange={(v) => { if (v !== "pick") onChange({ ...filters, date: v }); }}
+          >
+            <SelectTrigger className="w-[150px] h-9 rounded-lg text-sm"><SelectValue placeholder="Другая дата" /></SelectTrigger>
+            <SelectContent>
+              <SelectItem value="pick">Другая дата</SelectItem>
+              {dates.map((d) => <SelectItem key={d} value={d}>{formatDateShort(d)}</SelectItem>)}
+            </SelectContent>
+          </Select>
         </div>
 
         {/* Row 2: time + pier selects + amenity icons */}
@@ -236,12 +214,21 @@ export function FilterBar({ dates, piers, filters, onChange }: FilterBarProps) {
 
       {/* Mobile (<sm): stacked rows */}
       <div className="sm:hidden space-y-3">
-        {/* Row 1: first 2 date chips + calendar picker */}
+        {/* Row 1: first 2 date chips + date select */}
         <div className="flex items-center gap-2 flex-wrap">
           {dates.slice(0, 2).map((d) => (
             <Chip key={d} label={formatDateShort(d)} active={filters.date === d} onClick={() => onChange({ ...filters, date: d })} />
           ))}
-          <DatePickerButton filters={filters} onChange={onChange} dates={dates} />
+          <Select
+            value={filters.date && !dates.slice(0, 2).includes(filters.date) ? filters.date : "pick"}
+            onValueChange={(v) => { if (v !== "pick") onChange({ ...filters, date: v }); }}
+          >
+            <SelectTrigger className="w-[140px] h-9 rounded-lg text-sm"><SelectValue placeholder="Другая дата" /></SelectTrigger>
+            <SelectContent>
+              <SelectItem value="pick">Другая дата</SelectItem>
+              {dates.slice(2).map((d) => <SelectItem key={d} value={d}>{formatDateShort(d)}</SelectItem>)}
+            </SelectContent>
+          </Select>
         </div>
 
         {/* Row 2: time + pier selects */}

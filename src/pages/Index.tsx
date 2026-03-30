@@ -6,7 +6,6 @@ import { HowToChoose } from "@/components/landing/HowToChoose";
 import { FaqSection } from "@/components/landing/FaqSection";
 import { ReviewsSection } from "@/components/landing/ReviewsSection";
 import { StickyHeader } from "@/components/landing/StickyHeader";
-import { Footer } from "@/components/landing/Footer";
 import { Shield } from "lucide-react";
 import { useGeolocation, distanceMeters, type GeoPosition } from "@/hooks/use-geolocation";
 
@@ -209,8 +208,6 @@ const Index = () => {
           </div>
         </div>
       </div>
-
-      <Footer />
     </div>
   );
 };
