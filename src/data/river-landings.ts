@@ -2,6 +2,7 @@ import type { LandingContent } from "@/data/salute-landings";
 
 export interface RiverCityLanding extends Omit<LandingContent, "slug"> {
   slug: string;
+  cityNameDative: string;
   riverName: string;
   piers: string[];
   seasons: string;
@@ -11,6 +12,7 @@ export const RIVER_CITIES: Record<string, RiverCityLanding> = {
   moscow: {
     slug: "moscow",
     cityName: "Москва",
+    cityNameDative: "Москве",
     riverName: "Москва-река",
     piers: ["Причал «Большой Устьинский мост»", "Причал «Киевский вокзал»", "Причал «Парк Горького»", "Причал «Новоспасский мост»"],
     seasons: "апрель — октябрь",
@@ -40,6 +42,7 @@ export const RIVER_CITIES: Record<string, RiverCityLanding> = {
   spb: {
     slug: "spb",
     cityName: "Санкт-Петербург",
+    cityNameDative: "Санкт-Петербургу",
     riverName: "Нева и каналы",
     piers: ["Дворцовая наб.", "Английская наб.", "Аничков мост", "наб. Фонтанки"],
     seasons: "апрель — ноябрь",
@@ -68,6 +71,7 @@ export const RIVER_CITIES: Record<string, RiverCityLanding> = {
   kazan: {
     slug: "kazan",
     cityName: "Казань",
+    cityNameDative: "Казани",
     riverName: "Казанка и Волга",
     piers: ["Причал «Кремлёвская»", "Речной порт"],
     seasons: "май — сентябрь",
@@ -94,6 +98,7 @@ export const RIVER_CITIES: Record<string, RiverCityLanding> = {
   "nizhny-novgorod": {
     slug: "nizhny-novgorod",
     cityName: "Нижний Новгород",
+    cityNameDative: "Нижнему Новгороду",
     riverName: "Ока и Волга",
     piers: ["Причал «Стрелка»", "Речной вокзал"],
     seasons: "май — октябрь",
@@ -119,6 +124,7 @@ export const RIVER_CITIES: Record<string, RiverCityLanding> = {
   samara: {
     slug: "samara",
     cityName: "Самара",
+    cityNameDative: "Самаре",
     riverName: "Волга",
     piers: ["Речной вокзал", "Причал «Полевой спуск»"],
     seasons: "май — октябрь",
@@ -144,6 +150,7 @@ export const RIVER_CITIES: Record<string, RiverCityLanding> = {
   volgograd: {
     slug: "volgograd",
     cityName: "Волгоград",
+    cityNameDative: "Волгограду",
     riverName: "Волга",
     piers: ["Центральная набережная", "Речной вокзал"],
     seasons: "май — октябрь",
@@ -167,6 +174,7 @@ export const RIVER_CITIES: Record<string, RiverCityLanding> = {
   yaroslavl: {
     slug: "yaroslavl",
     cityName: "Ярославль",
+    cityNameDative: "Ярославлю",
     riverName: "Волга и Которосль",
     piers: ["Речной вокзал", "Стрелка"],
     seasons: "май — сентябрь",
@@ -192,6 +200,7 @@ export const RIVER_CITIES: Record<string, RiverCityLanding> = {
   krasnoyarsk: {
     slug: "krasnoyarsk",
     cityName: "Красноярск",
+    cityNameDative: "Красноярску",
     riverName: "Енисей",
     piers: ["Речной вокзал", "Причал «Коммунальный мост»"],
     seasons: "июнь — сентябрь",
@@ -217,6 +226,7 @@ export const RIVER_CITIES: Record<string, RiverCityLanding> = {
   perm: {
     slug: "perm",
     cityName: "Пермь",
+    cityNameDative: "Перми",
     riverName: "Кама",
     piers: ["Речной вокзал", "Причал «Центр»"],
     seasons: "май — сентябрь",
@@ -240,6 +250,7 @@ export const RIVER_CITIES: Record<string, RiverCityLanding> = {
   rostov: {
     slug: "rostov-on-don",
     cityName: "Ростов-на-Дону",
+    cityNameDative: "Ростову-на-Дону",
     riverName: "Дон",
     piers: ["Набережная Дона", "Причал «Левый берег»"],
     seasons: "апрель — октябрь",
@@ -265,6 +276,7 @@ export const RIVER_CITIES: Record<string, RiverCityLanding> = {
   novosibirsk: {
     slug: "novosibirsk",
     cityName: "Новосибирск",
+    cityNameDative: "Новосибирску",
     riverName: "Обь",
     piers: ["Речной вокзал"],
     seasons: "июнь — сентябрь",
@@ -289,6 +301,7 @@ export const RIVER_CITIES: Record<string, RiverCityLanding> = {
   tver: {
     slug: "tver",
     cityName: "Тверь",
+    cityNameDative: "Твери",
     riverName: "Волга",
     piers: ["Речной вокзал", "Причал у Старого моста"],
     seasons: "май — сентябрь",
