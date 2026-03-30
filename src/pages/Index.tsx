@@ -176,7 +176,6 @@ const Index = () => {
         </h2>
 
         <FilterBar
-          dates={DATES}
           piers={PIERS}
           filters={filters}
           onChange={setFilters}
