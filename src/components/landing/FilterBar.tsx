@@ -1,4 +1,4 @@
-import { RotateCcw } from "lucide-react";
+import { RotateCcw, UtensilsCrossed, Music, Mic, Headphones, Sun } from "lucide-react";
 import {
   Select,
   SelectContent,
@@ -6,12 +6,22 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
+import { Checkbox } from "@/components/ui/checkbox";
+
+import type { Amenity } from "@/components/landing/TripCard";
+import { AMENITY_META } from "@/components/landing/TripCard";
 
 export interface FilterState {
   date: string;
   timeSlot: string;
   pier: string;
   sort: string;
+  amenities: Amenity[];
 }
 
 interface FilterBarProps {
@@ -33,6 +43,16 @@ const SORT_OPTIONS = [
   { value: "price", label: "По цене" },
   { value: "popular", label: "По рейтингу" },
 ];
+
+const ALL_AMENITIES: Amenity[] = ["food", "music", "guide", "audioguide", "deck"];
+
+const AMENITY_ICON_MAP: Record<Amenity, React.ReactNode> = {
+  food: <UtensilsCrossed className="w-4 h-4" />,
+  music: <Music className="w-4 h-4" />,
+  guide: <Mic className="w-4 h-4" />,
+  audioguide: <Headphones className="w-4 h-4" />,
+  deck: <Sun className="w-4 h-4" />,
+};
 
 function formatDateShort(iso: string): string {
   const d = new Date(iso + "T00:00:00");
@@ -60,7 +80,13 @@ function Chip({ label, active, onClick }: { label: string; active: boolean; onCl
 }
 
 export function FilterBar({ dates, piers, filters, onChange }: FilterBarProps) {
-  const hasFilters = filters.date || filters.timeSlot || filters.pier;
+  const hasFilters = filters.date || filters.timeSlot || filters.pier || filters.amenities.length > 0;
+
+  const toggleAmenity = (a: Amenity) => {
+    const current = filters.amenities;
+    const next = current.includes(a) ? current.filter((x) => x !== a) : [...current, a];
+    onChange({ ...filters, amenities: next });
+  };
 
   return (
     <div className="space-y-4">
@@ -131,9 +157,66 @@ export function FilterBar({ dates, piers, filters, onChange }: FilterBarProps) {
           </Select>
         )}
 
+        <div className="w-px h-6 bg-border mx-1 hidden sm:block" />
+
+        {/* Amenity filter — desktop: icon chips */}
+        <div className="hidden md:flex items-center gap-1.5">
+          {ALL_AMENITIES.map((a) => {
+            const active = filters.amenities.includes(a);
+            return (
+              <button
+                key={a}
+                onClick={() => toggleAmenity(a)}
+                title={AMENITY_META[a].label}
+                className={`inline-flex items-center justify-center w-9 h-9 rounded-lg border transition-all ${
+                  active
+                    ? "bg-primary text-primary-foreground border-primary"
+                    : "bg-background text-muted-foreground border-border hover:border-primary/40 hover:text-foreground"
+                }`}
+              >
+                {AMENITY_ICON_MAP[a]}
+              </button>
+            );
+          })}
+        </div>
+
+        {/* Amenity filter — mobile: popover with checkboxes */}
+        <div className="md:hidden">
+          <Popover>
+            <PopoverTrigger asChild>
+              <button className={`inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg text-sm font-medium border transition-all ${
+                filters.amenities.length > 0
+                  ? "bg-primary text-primary-foreground border-primary"
+                  : "bg-background text-foreground border-border"
+              }`}>
+                Услуги
+                {filters.amenities.length > 0 && (
+                  <span className="bg-primary-foreground text-primary text-xs w-5 h-5 rounded-full inline-flex items-center justify-center font-bold">
+                    {filters.amenities.length}
+                  </span>
+                )}
+              </button>
+            </PopoverTrigger>
+            <PopoverContent className="w-56 p-3" align="start">
+              <div className="space-y-2">
+                {ALL_AMENITIES.map((a) => (
+                  <label key={a} className="flex items-center gap-2.5 cursor-pointer py-1">
+                    <Checkbox
+                      checked={filters.amenities.includes(a)}
+                      onCheckedChange={() => toggleAmenity(a)}
+                    />
+                    <span className="text-muted-foreground">{AMENITY_ICON_MAP[a]}</span>
+                    <span className="text-sm">{AMENITY_META[a].label}</span>
+                  </label>
+                ))}
+              </div>
+            </PopoverContent>
+          </Popover>
+        </div>
+
         {hasFilters && (
           <button
-            onClick={() => onChange({ ...filters, date: "", timeSlot: "", pier: "" })}
+            onClick={() => onChange({ ...filters, date: "", timeSlot: "", pier: "", amenities: [] })}
             className="ml-1 flex items-center gap-1 text-sm text-muted-foreground hover:text-foreground transition-colors"
           >
             <RotateCcw className="w-3.5 h-3.5" />

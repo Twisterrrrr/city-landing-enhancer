@@ -1,7 +1,7 @@
 import { useMemo, useState } from "react";
 import { HeroSection } from "@/components/landing/HeroSection";
 import { FilterBar, type FilterState } from "@/components/landing/FilterBar";
-import { TripCard, type TripVariant } from "@/components/landing/TripCard";
+import { TripCard, type TripVariant, type Amenity } from "@/components/landing/TripCard";
 import { HowToChoose } from "@/components/landing/HowToChoose";
 import { FaqSection } from "@/components/landing/FaqSection";
 import { ReviewsSection } from "@/components/landing/ReviewsSection";
@@ -22,14 +22,14 @@ function mockISO(dateStr: string, h: number, m: number): string {
 }
 
 const MOCK_VARIANTS: TripVariant[] = [
-  { id: "1", title: "Ночной Петербург — мосты и дворцы", startsAt: mockISO(DATES[0], 23, 0), durationMinutes: 90, pier: "наб. Мойки", price: 990, rating: 4.8, reviewCount: 312, availableTickets: 8, shipName: "Фонтанка" },
-  { id: "2", title: "Разводные мосты под звёздами", startsAt: mockISO(DATES[0], 23, 30), durationMinutes: 120, pier: "Дворцовая наб.", price: 1490, rating: 4.9, reviewCount: 487, availableTickets: 3, shipName: "Аврора Ривер" },
-  { id: "3", title: "Классическая прогулка под мостами", startsAt: mockISO(DATES[0], 23, 45), durationMinutes: 90, pier: "Английская наб.", price: 790, rating: 4.5, reviewCount: 198, availableTickets: 22, shipName: "Невский экспресс" },
-  { id: "4", title: "VIP-круиз: мосты + шампанское", startsAt: mockISO(DATES[1], 0, 0), durationMinutes: 150, pier: "Дворцовая наб.", price: 2990, rating: 4.9, reviewCount: 89, availableTickets: 2, shipName: "Империал" },
-  { id: "5", title: "Ночные мосты — экономный маршрут", startsAt: mockISO(DATES[1], 23, 15), durationMinutes: 75, pier: "наб. Мойки", price: 690, rating: 4.3, reviewCount: 256, availableTickets: 35 },
-  { id: "6", title: "Романтический рейс для двоих", startsAt: mockISO(DATES[1], 23, 30), durationMinutes: 120, pier: "Английская наб.", price: 1990, rating: 4.7, reviewCount: 134, availableTickets: 0, shipName: "Царица Невы" },
-  { id: "7", title: "Панорама разводных мостов", startsAt: mockISO(DATES[2], 23, 0), durationMinutes: 105, pier: "Дворцовая наб.", price: 1190, rating: 4.6, reviewCount: 341, availableTickets: 12 },
-  { id: "8", title: "Ночной Петербург с гидом", startsAt: mockISO(DATES[2], 0, 15), durationMinutes: 120, pier: "наб. Мойки", price: 1290, rating: 4.8, reviewCount: 210, availableTickets: 6, shipName: "Северная Венеция" },
+  { id: "1", title: "Ночной Петербург — мосты и дворцы", startsAt: mockISO(DATES[0], 23, 0), durationMinutes: 90, pier: "наб. Мойки", price: 990, rating: 4.8, reviewCount: 312, availableTickets: 8, shipName: "Фонтанка", amenities: ["guide", "deck", "food"] },
+  { id: "2", title: "Разводные мосты под звёздами", startsAt: mockISO(DATES[0], 23, 30), durationMinutes: 120, pier: "Дворцовая наб.", price: 1490, rating: 4.9, reviewCount: 487, availableTickets: 3, shipName: "Аврора Ривер", amenities: ["music", "food", "deck"] },
+  { id: "3", title: "Классическая прогулка под мостами", startsAt: mockISO(DATES[0], 23, 45), durationMinutes: 90, pier: "Английская наб.", price: 790, rating: 4.5, reviewCount: 198, availableTickets: 22, shipName: "Невский экспресс", amenities: ["audioguide"] },
+  { id: "4", title: "VIP-круиз: мосты + шампанское", startsAt: mockISO(DATES[1], 0, 0), durationMinutes: 150, pier: "Дворцовая наб.", price: 2990, rating: 4.9, reviewCount: 89, availableTickets: 2, shipName: "Империал", amenities: ["food", "music", "guide", "deck"] },
+  { id: "5", title: "Ночные мосты — экономный маршрут", startsAt: mockISO(DATES[1], 23, 15), durationMinutes: 75, pier: "наб. Мойки", price: 690, rating: 4.3, reviewCount: 256, availableTickets: 35, amenities: ["audioguide"] },
+  { id: "6", title: "Романтический рейс для двоих", startsAt: mockISO(DATES[1], 23, 30), durationMinutes: 120, pier: "Английская наб.", price: 1990, rating: 4.7, reviewCount: 134, availableTickets: 0, shipName: "Царица Невы", amenities: ["food", "music", "deck"] },
+  { id: "7", title: "Панорама разводных мостов", startsAt: mockISO(DATES[2], 23, 0), durationMinutes: 105, pier: "Дворцовая наб.", price: 1190, rating: 4.6, reviewCount: 341, availableTickets: 12, amenities: ["guide", "deck"] },
+  { id: "8", title: "Ночной Петербург с гидом", startsAt: mockISO(DATES[2], 0, 15), durationMinutes: 120, pier: "наб. Мойки", price: 1290, rating: 4.8, reviewCount: 210, availableTickets: 6, shipName: "Северная Венеция", amenities: ["guide", "food", "audioguide"] },
 ];
 
 const FAQ_ITEMS = [
@@ -95,6 +95,7 @@ const Index = () => {
     timeSlot: "",
     pier: "",
     sort: "time",
+    amenities: [],
   });
 
   const filtered = useMemo(() => {
@@ -106,6 +107,10 @@ const Index = () => {
       }
       if (filters.timeSlot && !matchTimeSlot(v.startsAt, filters.timeSlot)) return false;
       if (filters.pier && !v.pier.includes(filters.pier)) return false;
+      if (filters.amenities.length > 0) {
+        const vAmenities = v.amenities || [];
+        if (!filters.amenities.every((a) => vAmenities.includes(a))) return false;
+      }
       return true;
     });
   }, [filters]);

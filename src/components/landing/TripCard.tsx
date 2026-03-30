@@ -1,5 +1,15 @@
 import { motion } from "framer-motion";
-import { Clock, MapPin, Ship, Star, Users, ArrowRight } from "lucide-react";
+import { Clock, MapPin, Ship, Star, Users, ArrowRight, UtensilsCrossed, Music, Mic, Headphones, Sun } from "lucide-react";
+
+export type Amenity = "food" | "music" | "guide" | "audioguide" | "deck";
+
+export const AMENITY_META: Record<Amenity, { icon: string; label: string }> = {
+  food: { icon: "UtensilsCrossed", label: "Еда и напитки" },
+  music: { icon: "Music", label: "Музыка/DJ" },
+  guide: { icon: "Mic", label: "Экскурсовод" },
+  audioguide: { icon: "Headphones", label: "Аудиогид" },
+  deck: { icon: "Sun", label: "Открытая палуба" },
+};
 
 export interface TripVariant {
   id: string;
@@ -13,6 +23,7 @@ export interface TripVariant {
   reviewCount: number;
   availableTickets: number;
   shipName?: string;
+  amenities?: Amenity[];
 }
 
 interface TripCardProps {
@@ -39,6 +50,31 @@ function formatDuration(min: number): string {
 
 function formatPrice(n: number): string {
   return n.toLocaleString("ru-RU");
+}
+
+const AMENITY_ICONS: Record<Amenity, React.ReactNode> = {
+  food: <UtensilsCrossed className="w-3.5 h-3.5" />,
+  music: <Music className="w-3.5 h-3.5" />,
+  guide: <Mic className="w-3.5 h-3.5" />,
+  audioguide: <Headphones className="w-3.5 h-3.5" />,
+  deck: <Sun className="w-3.5 h-3.5" />,
+};
+
+function AmenityIcons({ amenities }: { amenities?: Amenity[] }) {
+  if (!amenities || amenities.length === 0) return null;
+  return (
+    <div className="flex items-center gap-1.5">
+      {amenities.map((a) => (
+        <span
+          key={a}
+          title={AMENITY_META[a].label}
+          className="inline-flex items-center justify-center w-7 h-7 rounded-md bg-muted text-muted-foreground hover:text-foreground transition-colors"
+        >
+          {AMENITY_ICONS[a]}
+        </span>
+      ))}
+    </div>
+  );
 }
 
 export function TripCard({ variant, isBest, index }: TripCardProps) {
@@ -94,6 +130,7 @@ export function TripCard({ variant, isBest, index }: TripCardProps) {
               {variant.rating} ({variant.reviewCount})
             </span>
           </div>
+          <AmenityIcons amenities={variant.amenities} />
         </div>
         {/* Seats + Button */}
         <div className="shrink-0 flex items-center gap-4 lg:gap-[120px]">
@@ -152,6 +189,7 @@ export function TripCard({ variant, isBest, index }: TripCardProps) {
             {variant.rating} ({variant.reviewCount})
           </span>
         </div>
+        <AmenityIcons amenities={variant.amenities} />
 
         {/* Seats + Button row */}
         <div className="flex items-center justify-between gap-3">
