@@ -180,40 +180,6 @@ export function FilterBar({ dates, piers, filters, onChange }: FilterBarProps) {
           })}
         </div>
 
-        {/* Amenity filter — mobile: popover with checkboxes */}
-        <div className="md:hidden">
-          <Popover>
-            <PopoverTrigger asChild>
-              <button className={`inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg text-sm font-medium border transition-all ${
-                filters.amenities.length > 0
-                  ? "bg-primary text-primary-foreground border-primary"
-                  : "bg-background text-foreground border-border"
-              }`}>
-                Услуги
-                {filters.amenities.length > 0 && (
-                  <span className="bg-primary-foreground text-primary text-xs w-5 h-5 rounded-full inline-flex items-center justify-center font-bold">
-                    {filters.amenities.length}
-                  </span>
-                )}
-              </button>
-            </PopoverTrigger>
-            <PopoverContent className="w-56 p-3" align="start">
-              <div className="space-y-2">
-                {ALL_AMENITIES.map((a) => (
-                  <label key={a} className="flex items-center gap-2.5 cursor-pointer py-1">
-                    <Checkbox
-                      checked={filters.amenities.includes(a)}
-                      onCheckedChange={() => toggleAmenity(a)}
-                    />
-                    <span className="text-muted-foreground">{AMENITY_ICON_MAP[a]}</span>
-                    <span className="text-sm">{AMENITY_META[a].label}</span>
-                  </label>
-                ))}
-              </div>
-            </PopoverContent>
-          </Popover>
-        </div>
-
         {hasFilters && (
           <button
             onClick={() => onChange({ ...filters, date: "", timeSlot: "", pier: "", amenities: [] })}
