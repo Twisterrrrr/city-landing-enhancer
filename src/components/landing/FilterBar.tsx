@@ -49,15 +49,6 @@ const AMENITY_ICON_MAP: Record<Amenity, React.ReactNode> = {
   deck: <Sun className="w-4 h-4" />,
 };
 
-function formatDateShort(iso: string): string {
-  const d = new Date(iso + "T00:00:00");
-  const now = new Date();
-  const today = now.toISOString().slice(0, 10);
-  const tomorrow = new Date(now.getTime() + 86400000).toISOString().slice(0, 10);
-  if (iso === today) return "Сегодня";
-  if (iso === tomorrow) return "Завтра";
-  return d.toLocaleDateString("ru-RU", { day: "numeric", month: "short", weekday: "short" });
-}
 
 function Chip({ label, active, onClick }: { label: string; active: boolean; onClick: () => void }) {
   return (
