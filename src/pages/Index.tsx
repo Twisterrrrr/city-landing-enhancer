@@ -107,6 +107,10 @@ const Index = () => {
       }
       if (filters.timeSlot && !matchTimeSlot(v.startsAt, filters.timeSlot)) return false;
       if (filters.pier && !v.pier.includes(filters.pier)) return false;
+      if (filters.amenities.length > 0) {
+        const vAmenities = v.amenities || [];
+        if (!filters.amenities.every((a) => vAmenities.includes(a))) return false;
+      }
       return true;
     });
   }, [filters]);

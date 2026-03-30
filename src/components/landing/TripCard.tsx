@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { Clock, MapPin, Ship, Star, Users, ArrowRight } from "lucide-react";
+import { Clock, MapPin, Ship, Star, Users, ArrowRight, UtensilsCrossed, Music, Mic, Headphones, Sun } from "lucide-react";
 
 export type Amenity = "food" | "music" | "guide" | "audioguide" | "deck";
 
