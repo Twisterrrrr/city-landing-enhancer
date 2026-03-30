@@ -48,7 +48,7 @@ const AMENITY_ICON_MAP: Record<Amenity, React.ReactNode> = {
   audioguide: <Headphones className="w-4 h-4" />,
   deck: <Sun className="w-4 h-4" />,
 };
-
+import { DateFilter } from "@/components/filters/DateFilter";
 
 function Chip({ label, active, onClick }: { label: string; active: boolean; onClick: () => void }) {
   return (
