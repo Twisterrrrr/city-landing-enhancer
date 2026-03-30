@@ -199,15 +199,14 @@ export function FilterBar({ dates, piers, filters, onChange }: FilterBarProps) {
       <div className="hidden sm:block lg:hidden space-y-3">
         {/* Row 1: date chips + "Выбрать дату" select */}
         <div className="flex items-center gap-2 flex-wrap">
-          <Chip label="Все даты" active={!filters.date} onClick={() => onChange({ ...filters, date: "" })} />
           {dates.map((d) => (
             <Chip key={d} label={formatDateShort(d)} active={filters.date === d} onClick={() => onChange({ ...filters, date: d })} />
           ))}
           <Select
             value={filters.date && !dates.includes(filters.date) ? filters.date : "pick"}
-            onValueChange={(v) => onChange({ ...filters, date: v === "pick" ? "" : v })}
+            onValueChange={(v) => { if (v !== "pick") onChange({ ...filters, date: v }); }}
           >
-            <SelectTrigger className="w-[150px] h-9 rounded-lg text-sm"><SelectValue placeholder="Выбрать дату" /></SelectTrigger>
+            <SelectTrigger className="w-[150px] h-9 rounded-lg text-sm"><SelectValue placeholder="Другая дата" /></SelectTrigger>
             <SelectContent>
               <SelectItem value="pick">Другая дата</SelectItem>
               {dates.map((d) => <SelectItem key={d} value={d}>{formatDateShort(d)}</SelectItem>)}
