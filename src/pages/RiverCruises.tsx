@@ -197,7 +197,9 @@ const RiverCruises = () => {
 
   const seoTitle = landing?.seoTitle || "Речные прогулки по России — расписание и цены 2026";
   const seoDesc = landing?.seoDescription || "Речные прогулки в 12+ городах России: Москва, Петербург, Казань и другие. Сравните расписание, цены и отзывы.";
-  const heroTitle = landing?.heroTitle || "Речные прогулки по России";
+  const heroTitle = landing
+    ? `Речные прогулки по ${landing.cityName} сегодня — подбор вариантов`
+    : "Речные прогулки по России — подбор вариантов";
   const heroSubtitle = landing?.heroSubtitle || "От Невы до Енисея — сравните предложения речных прогулок в 12 городах России.";
   const faqItems = landing?.faq || DEFAULT_FAQ;
   const isLowResults = sorted.filter((v) => v.availableTickets > 0).length < 3;
