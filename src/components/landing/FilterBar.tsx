@@ -110,11 +110,25 @@ export function FilterBar({ dates, piers, filters, onChange }: FilterBarProps) {
         ))}
       </div>
 
-      {/* Date + Time + Pier selects — one row on mobile */}
+      {/* Date + Time + Pier selects */}
       <div className="flex items-center gap-2">
+        <Select
+          value={filters.date || "all"}
+          onValueChange={(v) => onChange({ ...filters, date: v === "all" ? "" : v })}
+        >
+          <SelectTrigger className="flex-1 sm:w-[170px] sm:flex-none h-9 rounded-lg text-sm">
+            <SelectValue placeholder="Выбрать дату" />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value="all">Все даты</SelectItem>
+            {dates.map((d) => (
+              <SelectItem key={d} value={d}>
+                {formatDateShort(d)}
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
 
-      {/* Time + Pier selects — one row on mobile */}
-      <div className="flex items-center gap-2">
         <Select
           value={filters.timeSlot || "all"}
           onValueChange={(v) => onChange({ ...filters, timeSlot: v === "all" ? "" : v })}
