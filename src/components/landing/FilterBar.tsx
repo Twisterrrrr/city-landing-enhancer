@@ -177,22 +177,7 @@ export function FilterBar({ dates, piers, filters, onChange }: FilterBarProps) {
 
       {/* Mobile (<sm): stacked rows */}
       <div className="sm:hidden space-y-3">
-        {/* Row 1: first 2 date chips + date select */}
-        <div className="flex items-center gap-2 flex-wrap">
-          {dates.slice(0, 2).map((d) => (
-            <Chip key={d} label={formatDateShort(d)} active={filters.date === d} onClick={() => onChange({ ...filters, date: d })} />
-          ))}
-          <Select
-            value={filters.date && !dates.slice(0, 2).includes(filters.date) ? filters.date : "pick"}
-            onValueChange={(v) => { if (v !== "pick") onChange({ ...filters, date: v }); }}
-          >
-            <SelectTrigger className="w-[140px] h-9 rounded-lg text-sm"><SelectValue placeholder="Другая дата" /></SelectTrigger>
-            <SelectContent>
-              <SelectItem value="pick">Другая дата</SelectItem>
-              {dates.slice(2).map((d) => <SelectItem key={d} value={d}>{formatDateShort(d)}</SelectItem>)}
-            </SelectContent>
-          </Select>
-        </div>
+        <DateFilter value={filters.date} onChange={(d) => onChange({ ...filters, date: d })} />
 
         {/* Row 2: time + pier selects */}
         <div className="flex items-center gap-2">
