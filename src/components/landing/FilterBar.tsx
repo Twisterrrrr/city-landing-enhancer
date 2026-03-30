@@ -48,7 +48,7 @@ function Chip({ label, active, onClick }: { label: string; active: boolean; onCl
   return (
     <button
       onClick={onClick}
-      className={`px-3.5 py-1.5 rounded-full text-sm font-medium transition-all whitespace-nowrap border ${
+      className={`px-3.5 py-1.5 rounded-lg text-sm font-medium transition-all whitespace-nowrap border ${
         active
           ? "bg-primary text-primary-foreground border-primary"
           : "bg-background text-foreground border-border hover:border-primary/40 hover:text-primary"
