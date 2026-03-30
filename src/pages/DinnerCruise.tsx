@@ -535,10 +535,37 @@ const DinnerCruise = () => {
         </div>
 
         {sorted.length === 0 && (
-          <div className="text-center py-16">
+          <div className="text-center py-16 space-y-4">
             <p className="text-muted-foreground">
-              Попробуйте изменить фильтры
+              Нет рейсов на выбранную дату
             </p>
+            <div className="flex flex-wrap items-center justify-center gap-2">
+              <button
+                onClick={() => setFilters({ ...filters, date: defaultDate, menuType: "", timeSlot: "", format: "", maxPrice: "" })}
+                className="px-4 py-2 rounded-lg text-sm font-semibold border border-primary text-primary hover:bg-primary/5 transition-colors"
+              >
+                Сбросить фильтры
+              </button>
+              {(() => {
+                const allDates = [...new Set(DINNER_CRUISE_MOCK.map((v) => dateToMoscowISO(v.startsAt)))].sort();
+                const nearest = allDates.filter((d) => d >= defaultDate).slice(0, 3);
+                if (nearest.length === 0) return null;
+                return (
+                  <>
+                    <span className="text-sm text-muted-foreground">или</span>
+                    {nearest.map((d) => (
+                      <button
+                        key={d}
+                        onClick={() => setFilters({ ...filters, date: d })}
+                        className="px-3 py-1.5 rounded-lg text-sm font-medium border border-border hover:border-primary/40 hover:text-primary transition-colors"
+                      >
+                        {formatMoscowShort(d)}
+                      </button>
+                    ))}
+                  </>
+                );
+              })()}
+            </div>
           </div>
         )}
       </section>
