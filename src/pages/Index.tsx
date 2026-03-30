@@ -99,7 +99,7 @@ const Index = () => {
 
   const filtered = useMemo(() => {
     return MOCK_VARIANTS.filter((v) => {
-      if (v.availableTickets <= 0) return true; // show sold out but dimmed
+      if (v.availableTickets <= 0) return true;
       if (filters.date) {
         const vDate = v.startsAt.slice(0, 10);
         if (vDate !== filters.date) return false;
@@ -133,8 +133,8 @@ const Index = () => {
       />
 
       {/* Schedule */}
-      <section id="variants" className="container mx-auto px-4 py-16">
-        <h2 className="font-display text-3xl font-bold text-foreground mb-8">
+      <section id="variants" className="container mx-auto px-4 py-12">
+        <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-6">
           Расписание рейсов
         </h2>
 
@@ -145,7 +145,6 @@ const Index = () => {
           onChange={setFilters}
         />
 
-        {/* Count */}
         <div className="flex items-center gap-3 mt-6 mb-4">
           <span className="text-sm text-muted-foreground">
             {sorted.length > 0
@@ -153,12 +152,11 @@ const Index = () => {
               : "Нет рейсов по выбранным фильтрам"}
           </span>
           {bestIdx !== null && (
-            <span className="text-xs text-gold">⭐ Оптимальный выбор выделен</span>
+            <span className="text-xs text-primary font-medium">⭐ Оптимальный выбор выделен</span>
           )}
         </div>
 
-        {/* Cards */}
-        <div className="space-y-4">
+        <div className="space-y-3">
           {sorted.map((v, i) => (
             <TripCard key={v.id} variant={v} isBest={i === bestIdx} index={i} />
           ))}
@@ -176,7 +174,6 @@ const Index = () => {
         <FaqSection items={FAQ_ITEMS} />
         <ReviewsSection items={REVIEWS} />
 
-        {/* Legal */}
         <div className="py-12 text-center">
           <div className="flex items-center justify-center gap-2 text-sm text-muted-foreground">
             <Shield className="w-4 h-4" />

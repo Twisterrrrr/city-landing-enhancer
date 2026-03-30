@@ -41,10 +41,10 @@ function Chip({ label, active, onClick }: { label: string; active: boolean; onCl
   return (
     <button
       onClick={onClick}
-      className={`px-4 py-2 rounded-lg text-sm font-medium transition-all whitespace-nowrap ${
+      className={`px-4 py-2 rounded-full text-sm font-medium transition-all whitespace-nowrap border ${
         active
-          ? "bg-primary text-primary-foreground shadow-md"
-          : "bg-secondary text-secondary-foreground hover:bg-secondary/80"
+          ? "bg-primary text-primary-foreground border-primary"
+          : "bg-background text-foreground border-border hover:border-primary/40 hover:text-primary"
       }`}
     >
       {label}
@@ -58,25 +58,27 @@ export function FilterBar({ dates, piers, filters, onChange }: FilterBarProps) {
   return (
     <div className="space-y-4">
       {/* Sort tabs */}
-      <div className="flex items-center gap-2 border-b border-border pb-3">
+      <div className="flex items-center gap-1 border-b border-border">
         {SORT_OPTIONS.map((opt) => (
           <button
             key={opt.value}
             onClick={() => onChange({ ...filters, sort: opt.value })}
-            className={`px-4 py-2 rounded-t-lg text-sm font-medium transition-colors ${
+            className={`px-4 py-2.5 text-sm font-medium transition-colors relative ${
               filters.sort === opt.value
-                ? "text-gold border-b-2 border-gold"
+                ? "text-primary"
                 : "text-muted-foreground hover:text-foreground"
             }`}
           >
             {opt.label}
+            {filters.sort === opt.value && (
+              <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-primary rounded-full" />
+            )}
           </button>
         ))}
       </div>
 
       {/* Filters row */}
       <div className="flex flex-wrap items-center gap-2">
-        {/* Dates */}
         <Chip label="Все даты" active={!filters.date} onClick={() => onChange({ ...filters, date: "" })} />
         {dates.map((d) => (
           <Chip key={d} label={formatDateShort(d)} active={filters.date === d} onClick={() => onChange({ ...filters, date: d })} />
@@ -84,7 +86,6 @@ export function FilterBar({ dates, piers, filters, onChange }: FilterBarProps) {
 
         <div className="w-px h-6 bg-border mx-1 hidden md:block" />
 
-        {/* Time */}
         {TIME_SLOTS.map((slot) => (
           <Chip
             key={slot.value}

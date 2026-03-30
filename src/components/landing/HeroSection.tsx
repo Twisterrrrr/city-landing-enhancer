@@ -1,6 +1,5 @@
 import { motion } from "framer-motion";
-import { ChevronDown, Shield, Star, TrendingUp } from "lucide-react";
-import heroBg from "@/assets/hero-bridges.jpg";
+import { Shield, Star, TrendingUp } from "lucide-react";
 
 interface HeroProps {
   title: string;
@@ -12,75 +11,47 @@ interface HeroProps {
 
 export function HeroSection({ title, subtitle, totalTrips, totalSold, avgRating }: HeroProps) {
   return (
-    <section className="relative min-h-[85vh] flex items-end overflow-hidden">
-      {/* Background */}
-      <div className="absolute inset-0">
-        <img
-          src={heroBg}
-          alt="Разводные мосты Санкт-Петербурга ночью"
-          className="w-full h-full object-cover"
-        />
-        <div
-          className="absolute inset-0"
-          style={{ background: "var(--gradient-hero)" }}
-        />
-      </div>
-
-      <div className="relative z-10 container mx-auto px-4 pb-12 pt-32">
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-          className="max-w-3xl"
-        >
-          <h1 className="font-display text-4xl md:text-6xl font-bold text-foreground leading-tight mb-4">
-            {title}
-          </h1>
-          <p className="text-lg md:text-xl text-muted-foreground mb-8 max-w-2xl">
-            {subtitle}
-          </p>
-
-          <div className="flex flex-wrap gap-3 mb-10">
-            <a
-              href="#variants"
-              className="inline-flex items-center gap-2 px-8 py-4 rounded-xl font-semibold text-primary-foreground transition-all hover:scale-105"
-              style={{ background: "var(--gradient-gold)" }}
-            >
-              Смотреть рейсы
-              <ChevronDown className="w-4 h-4" />
-            </a>
-            <a
-              href="#how-to-choose"
-              className="inline-flex items-center gap-2 px-8 py-4 rounded-xl font-semibold border border-border text-foreground bg-secondary/50 backdrop-blur-sm hover:bg-secondary transition-all"
-            >
-              Как выбрать маршрут
-            </a>
-          </div>
-        </motion.div>
-
-        {/* Trust bar */}
+    <section className="relative overflow-hidden" style={{ background: "var(--gradient-hero)" }}>
+      <div className="container mx-auto px-4 py-16 md:py-24">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.3 }}
-          className="flex flex-wrap gap-4 md:gap-6"
+          transition={{ duration: 0.5 }}
+          className="max-w-3xl"
         >
-          <TrustItem icon={<Shield className="w-5 h-5 text-gold" />} label={`${totalTrips} рейсов доступно`} />
-          <TrustItem icon={<TrendingUp className="w-5 h-5 text-gold" />} label={`${totalSold.toLocaleString("ru-RU")}+ билетов продано`} />
-          {avgRating > 0 && (
-            <TrustItem icon={<Star className="w-5 h-5 text-gold" />} label={`${avgRating} / 5 — средняя оценка`} />
-          )}
+          <nav className="flex items-center gap-2 text-sm text-primary-foreground/70 mb-6">
+            <a href="/" className="hover:text-primary-foreground transition-colors">Главная</a>
+            <span>/</span>
+            <a href="/" className="hover:text-primary-foreground transition-colors">Санкт-Петербург</a>
+            <span>/</span>
+            <span className="text-primary-foreground">Ночные мосты</span>
+          </nav>
+
+          <h1 className="text-3xl md:text-5xl font-extrabold text-primary-foreground leading-tight mb-4">
+            {title}
+          </h1>
+          <p className="text-base md:text-lg text-primary-foreground/80 mb-8 max-w-2xl leading-relaxed">
+            {subtitle}
+          </p>
+
+          <div className="flex flex-wrap gap-3">
+            <StatChip icon={<TrendingUp className="w-4 h-4" />} label={`${totalTrips} рейсов`} />
+            <StatChip icon={<Shield className="w-4 h-4" />} label={`${totalSold.toLocaleString("ru-RU")}+ продано`} />
+            {avgRating > 0 && (
+              <StatChip icon={<Star className="w-4 h-4" />} label={`${avgRating} / 5`} />
+            )}
+          </div>
         </motion.div>
       </div>
     </section>
   );
 }
 
-function TrustItem({ icon, label }: { icon: React.ReactNode; label: string }) {
+function StatChip({ icon, label }: { icon: React.ReactNode; label: string }) {
   return (
-    <div className="flex items-center gap-2 px-4 py-2.5 rounded-lg bg-secondary/60 backdrop-blur-sm border border-border">
+    <div className="flex items-center gap-2 px-4 py-2 rounded-full bg-primary-foreground/15 backdrop-blur-sm text-primary-foreground text-sm font-medium">
       {icon}
-      <span className="text-sm font-medium text-foreground">{label}</span>
+      {label}
     </div>
   );
 }

@@ -12,19 +12,22 @@ export function FaqSection({ items }: { items: FaqItem[] }) {
 
   return (
     <section id="faq" className="py-16">
-      <h2 className="font-display text-3xl font-bold text-foreground mb-10 text-center">
+      <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-2 text-center">
         Частые вопросы
       </h2>
+      <p className="text-muted-foreground text-center mb-10">
+        Ответы на популярные вопросы о ночных прогулках
+      </p>
       <div className="max-w-3xl mx-auto space-y-3">
         {items.map((item, idx) => {
           const isOpen = openIdx === idx;
           return (
-            <div key={idx} className="glass-card rounded-xl overflow-hidden">
+            <div key={idx} className="rounded-xl border border-border bg-card overflow-hidden">
               <button
                 onClick={() => setOpenIdx(isOpen ? null : idx)}
-                className="w-full flex items-center gap-3 px-6 py-4 text-left transition-colors hover:bg-secondary/30"
+                className="w-full flex items-center gap-3 px-6 py-4 text-left transition-colors hover:bg-secondary/50"
               >
-                <HelpCircle className="w-5 h-5 text-gold shrink-0" />
+                <HelpCircle className="w-5 h-5 text-primary shrink-0" />
                 <span className="flex-1 font-medium text-foreground">{item.question}</span>
                 <ChevronDown
                   className={`w-5 h-5 text-muted-foreground transition-transform duration-300 ${isOpen ? "rotate-180" : ""}`}
