@@ -301,6 +301,7 @@ export const RIVER_CITIES: Record<string, RiverCityLanding> = {
   tver: {
     slug: "tver",
     cityName: "Тверь",
+    cityNameDative: "Твери",
     riverName: "Волга",
     piers: ["Речной вокзал", "Причал у Старого моста"],
     seasons: "май — сентябрь",
