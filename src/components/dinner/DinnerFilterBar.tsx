@@ -207,6 +207,7 @@ export function DinnerFilterBar({ filters, onChange }: DinnerFilterBarProps) {
 
       {/* Mobile / Tablet */}
       <div className="lg:hidden space-y-2">
+        <DateFilter value={filters.date} onChange={(d) => set({ date: d })} />
         {isMobile && (
           <Select
             value={filters.sort}
