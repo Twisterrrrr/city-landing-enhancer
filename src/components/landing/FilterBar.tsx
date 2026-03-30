@@ -110,25 +110,51 @@ export function FilterBar({ dates, piers, filters, onChange }: FilterBarProps) {
         ))}
       </div>
 
-      {/* Date + Time + Pier selects */}
-      <div className="flex items-center gap-2">
-        <Select
-          value={filters.date || "all"}
-          onValueChange={(v) => onChange({ ...filters, date: v === "all" ? "" : v })}
-        >
-          <SelectTrigger className="flex-1 sm:w-[170px] sm:flex-none h-9 rounded-lg text-sm">
-            <SelectValue placeholder="Выбрать дату" />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem value="all">Все даты</SelectItem>
-            {dates.map((d) => (
-              <SelectItem key={d} value={d}>
-                {formatDateShort(d)}
-              </SelectItem>
-            ))}
-          </SelectContent>
-        </Select>
+      {/* Date row: Сегодня / Завтра chips + "Выбрать дату" select for other dates */}
+      {(() => {
+        const now = new Date();
+        const todayIso = now.toISOString().slice(0, 10);
+        const tomorrowIso = new Date(now.getTime() + 86400000).toISOString().slice(0, 10);
+        const quickDates = dates.filter((d) => d === todayIso || d === tomorrowIso);
+        const otherDates = dates.filter((d) => d !== todayIso && d !== tomorrowIso);
+        const isOtherSelected = filters.date && !quickDates.includes(filters.date);
 
+        return (
+          <div className="flex items-center gap-1.5 sm:gap-2">
+            {quickDates.map((d) => (
+              <Chip
+                key={d}
+                label={formatDateShort(d)}
+                active={filters.date === d}
+                onClick={() => onChange({ ...filters, date: filters.date === d ? "" : d })}
+              />
+            ))}
+            {otherDates.length > 0 && (
+              <Select
+                value={isOtherSelected ? filters.date : "pick"}
+                onValueChange={(v) => onChange({ ...filters, date: v === "pick" ? "" : v })}
+              >
+                <SelectTrigger className={`w-[150px] h-9 rounded-lg text-sm border ${
+                  isOtherSelected ? "border-primary bg-primary text-primary-foreground" : ""
+                }`}>
+                  <SelectValue placeholder="Выбрать дату" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="pick">Все даты</SelectItem>
+                  {otherDates.map((d) => (
+                    <SelectItem key={d} value={d}>
+                      {formatDateShort(d)}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            )}
+          </div>
+        );
+      })()}
+
+      {/* Time + Pier selects */}
+      <div className="flex items-center gap-2">
         <Select
           value={filters.timeSlot || "all"}
           onValueChange={(v) => onChange({ ...filters, timeSlot: v === "all" ? "" : v })}
