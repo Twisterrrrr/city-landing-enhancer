@@ -131,8 +131,8 @@ export function FilterBar({ dates, piers, filters, onChange }: FilterBarProps) {
             ))}
             {otherDates.length > 0 && (
               <Select
-                value={isOtherSelected ? filters.date : "pick"}
-                onValueChange={(v) => onChange({ ...filters, date: v === "pick" ? "" : v })}
+                value={isOtherSelected ? filters.date : ""}
+                onValueChange={(v) => onChange({ ...filters, date: v })}
               >
                 <SelectTrigger className={`w-[150px] h-9 rounded-lg text-sm border ${
                   isOtherSelected ? "border-primary bg-primary text-primary-foreground" : ""
