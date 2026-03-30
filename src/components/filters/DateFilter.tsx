@@ -71,11 +71,11 @@ export function DateFilter({ value, onChange, className }: DateFilterProps) {
             selected={value ? new Date(value + "T00:00:00") : undefined}
             onSelect={(d) => {
               if (d) {
-                onChange(toMoscowIso(d));
+                onChange(dateToMoscowISO(d));
                 setOpen(false);
               }
             }}
-            disabled={(d) => d < now}
+            disabled={(d) => d < todayDate}
             initialFocus
             className={cn("p-3 pointer-events-auto")}
           />
