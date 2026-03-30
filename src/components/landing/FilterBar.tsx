@@ -99,7 +99,7 @@ export function FilterBar({ dates, piers, filters, onChange }: FilterBarProps) {
           value={filters.timeSlot || "all"}
           onValueChange={(v) => onChange({ ...filters, timeSlot: v === "all" ? "" : v })}
         >
-          <SelectTrigger className="w-[160px] h-9 rounded-full text-sm">
+          <SelectTrigger className="w-[160px] h-9 rounded-lg text-sm">
             <SelectValue placeholder="Время" />
           </SelectTrigger>
           <SelectContent>
