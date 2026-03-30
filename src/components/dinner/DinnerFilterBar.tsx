@@ -6,6 +6,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { DateFilter } from "@/components/filters/DateFilter";
 import { UtensilsCrossed, Wine, Clock, Sun, Moon } from "lucide-react";
 
 export interface DinnerFilterState {
