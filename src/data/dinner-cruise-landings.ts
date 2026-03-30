@@ -23,6 +23,7 @@ export interface DinnerCruiseLanding {
   cityName: string;
   cityNameDative: string;
   riverName: string;
+  riverNameDative: string;
   seoTitle: string;
   seoDescription: string;
   heroSubtitle: string;
@@ -41,6 +42,7 @@ export const DINNER_CRUISE_CITIES: Record<string, DinnerCruiseLanding> = {
     cityName: "Москва",
     cityNameDative: "Москве",
     riverName: "Москва-река",
+    riverNameDative: "Москве-реке",
     seoTitle: "Ужин на теплоходе по Москве-реке — цены и расписание 2026",
     seoDescription:
       "Ужин на теплоходе по Москве-реке: сравните рестораны на воде, меню, цены и расписание вечерних круизов. Романтические ужины, панорамные столы, VIP-форматы.",

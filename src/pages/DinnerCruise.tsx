@@ -451,7 +451,7 @@ const DinnerCruise = () => {
       <StickyHeader />
 
       <HeroSection
-        title={`Ужин на теплоходе по ${landing.cityNameDative} — цены и расписание`}
+        title={`Ужин на теплоходе по ${landing.riverNameDative} сегодня — цены и расписание`}
         subtitle={landing.heroSubtitle}
         totalTrips={DINNER_CRUISE_MOCK.length}
         totalSold={8400}
