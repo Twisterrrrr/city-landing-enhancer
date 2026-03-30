@@ -1,6 +1,5 @@
 import { motion } from "framer-motion";
 import { Shield, Star, TrendingUp } from "lucide-react";
-import heroBg from "@/assets/hero-bridges.jpg";
 
 interface HeroProps {
   title: string;
@@ -12,18 +11,9 @@ interface HeroProps {
 
 export function HeroSection({ title, subtitle, totalTrips, totalSold, avgRating }: HeroProps) {
   return (
-    <section className="relative overflow-hidden">
-      {/* Background image */}
-      <img
-        src={heroBg}
-        alt="Разводные мосты Санкт-Петербурга ночью"
-        className="absolute inset-0 w-full h-full object-cover"
-        width={1920}
-        height={800}
-        fetchPriority="high"
-      />
+    <section className="relative overflow-hidden bg-primary">
       {/* Overlay */}
-      <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/50 to-black/30" />
+      <div className="absolute inset-0 bg-gradient-to-r from-black/30 via-transparent to-black/10" />
 
       <div className="relative container mx-auto px-4 py-16 md:py-24">
         <motion.div
