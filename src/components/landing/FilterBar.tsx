@@ -135,8 +135,8 @@ export function FilterBar({ dates, piers, filters, onChange }: FilterBarProps) {
 
   return (
     <div className="space-y-4">
-      {/* Sort tabs */}
-      <div className="flex items-center gap-1 border-b border-border">
+      {/* Sort tabs — desktop/tablet */}
+      <div className="hidden sm:flex items-center gap-1 border-b border-border">
         {SORT_OPTIONS.map((opt) => (
           <button
             key={opt.value}
@@ -153,6 +153,20 @@ export function FilterBar({ dates, piers, filters, onChange }: FilterBarProps) {
             )}
           </button>
         ))}
+      </div>
+
+      {/* Sort select — mobile */}
+      <div className="sm:hidden">
+        <Select value={filters.sort} onValueChange={(v) => onChange({ ...filters, sort: v })}>
+          <SelectTrigger className="w-full h-9 rounded-lg text-sm">
+            <SelectValue placeholder="Сортировка" />
+          </SelectTrigger>
+          <SelectContent>
+            {SORT_OPTIONS.map((s) => (
+              <SelectItem key={s.value} value={s.value}>{s.label}</SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
       </div>
 
       {/* Desktop (lg+): single row */}
