@@ -159,6 +159,7 @@ const BusTours = () => {
 
   const [filters, setFilters] = useState<BusFilterState>({
     city: cityName || "",
+    date: "",
     timeSlot: "",
     sort: "price",
     amenities: [],

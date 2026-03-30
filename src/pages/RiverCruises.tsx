@@ -164,6 +164,7 @@ const RiverCruises = () => {
 
   const [filters, setFilters] = useState<RiverFilterState>({
     city: cityName || "",
+    date: "",
     timeSlot: "",
     sort: "price",
     amenities: [],
