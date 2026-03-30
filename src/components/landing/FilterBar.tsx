@@ -110,13 +110,8 @@ export function FilterBar({ dates, piers, filters, onChange }: FilterBarProps) {
         ))}
       </div>
 
-      {/* Date chips — single row */}
-      <div className="flex items-center gap-1.5 sm:gap-2">
-        <Chip label="Все" active={!filters.date} onClick={() => onChange({ ...filters, date: "" })} />
-        {dates.map((d) => (
-          <Chip key={d} label={formatDateShort(d)} active={filters.date === d} onClick={() => onChange({ ...filters, date: d })} />
-        ))}
-      </div>
+      {/* Date + Time + Pier selects — one row on mobile */}
+      <div className="flex items-center gap-2">
 
       {/* Time + Pier selects — one row on mobile */}
       <div className="flex items-center gap-2">
