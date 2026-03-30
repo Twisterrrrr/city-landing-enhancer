@@ -281,6 +281,23 @@ const RiverCruises = () => {
             <OtherCitiesBlock currentCity={landing.cityName} />
           </div>
         )}
+
+        {/* Cross-link to dinner cruise if available */}
+        {landing && DINNER_CRUISE_CITIES[landing.slug] && (
+          <div className="mt-6 rounded-xl border border-border bg-card p-5 flex flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-6">
+            <UtensilsCrossed className="w-5 h-5 text-primary shrink-0 mt-0.5 sm:mt-0" />
+            <div className="flex-1">
+              <p className="text-sm font-medium text-foreground">Ужин на теплоходе</p>
+              <p className="text-xs text-muted-foreground">Рестораны на воде с сет-меню и фуршетами — премиум-круизы по {landing.cityNameDative}</p>
+            </div>
+            <Link
+              to={`/dinner-cruise/${landing.slug}`}
+              className="px-4 py-2 rounded-lg text-sm font-semibold border border-primary text-primary hover:bg-primary/5 transition-colors whitespace-nowrap"
+            >
+              Смотреть ужины
+            </Link>
+          </div>
+        )}
       </section>
 
       <div className="container mx-auto px-4">
