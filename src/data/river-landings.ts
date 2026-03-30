@@ -71,6 +71,7 @@ export const RIVER_CITIES: Record<string, RiverCityLanding> = {
   kazan: {
     slug: "kazan",
     cityName: "Казань",
+    cityNameDative: "Казани",
     riverName: "Казанка и Волга",
     piers: ["Причал «Кремлёвская»", "Речной порт"],
     seasons: "май — сентябрь",
