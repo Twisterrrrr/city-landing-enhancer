@@ -36,6 +36,7 @@ const SORT_OPTIONS = [
   { value: "time", label: "По времени" },
   { value: "price", label: "По цене" },
   { value: "popular", label: "По рейтингу" },
+  { value: "distance", label: "По удалённости" },
 ];
 
 const ALL_AMENITIES: Amenity[] = ["food", "music", "guide", "audioguide", "deck"];
