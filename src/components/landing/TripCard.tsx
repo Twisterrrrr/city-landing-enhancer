@@ -96,7 +96,7 @@ export function TripCard({ variant, isBest, index }: TripCardProps) {
           </div>
         </div>
         {/* Seats + Button */}
-        <div className="shrink-0 flex items-center gap-[120px]">
+        <div className="shrink-0 flex items-center gap-4 lg:gap-[120px]">
           {!soldOut && (
             <div className={`flex items-center gap-1 text-xs font-medium ${urgencyClass}`}>
               <Users className="w-3.5 h-3.5" />
