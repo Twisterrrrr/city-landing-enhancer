@@ -8,14 +8,19 @@ import { ReviewsSection } from "@/components/landing/ReviewsSection";
 import { StickyHeader } from "@/components/landing/StickyHeader";
 import { Shield } from "lucide-react";
 import { useGeolocation, distanceMeters, type GeoPosition } from "@/hooks/use-geolocation";
+import { getMoscowTodayISO, getMoscowTomorrowISO } from "@/lib/date/moscow";
 
 // ─── MOCK DATA ──────────────────────────────────────────────
 
-const today = new Date();
-const fmt = (d: Date) => d.toISOString().slice(0, 10);
-const addDays = (n: number) => new Date(today.getTime() + n * 86400000);
+const mskToday = getMoscowTodayISO();
+const mskTomorrow = getMoscowTomorrowISO();
+const addDaysToISO = (iso: string, n: number) => {
+  const [y, m, d] = iso.split("-").map(Number);
+  const dt = new Date(y, m - 1, d + n);
+  return `${dt.getFullYear()}-${String(dt.getMonth() + 1).padStart(2, "0")}-${String(dt.getDate()).padStart(2, "0")}`;
+};
 
-const DATES = [fmt(today), fmt(addDays(1)), fmt(addDays(2)), fmt(addDays(3))];
+const DATES = [mskToday, mskTomorrow, addDaysToISO(mskToday, 2), addDaysToISO(mskToday, 3)];
 const PIERS = ["наб. Мойки", "Дворцовая наб.", "Английская наб."];
 
 const PIER_COORDS: Record<string, GeoPosition> = {
@@ -171,7 +176,6 @@ const Index = () => {
         </h2>
 
         <FilterBar
-          dates={DATES}
           piers={PIERS}
           filters={filters}
           onChange={setFilters}
