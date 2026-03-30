@@ -226,6 +226,7 @@ export const RIVER_CITIES: Record<string, RiverCityLanding> = {
   perm: {
     slug: "perm",
     cityName: "Пермь",
+    cityNameDative: "Перми",
     riverName: "Кама",
     piers: ["Речной вокзал", "Причал «Центр»"],
     seasons: "май — сентябрь",
