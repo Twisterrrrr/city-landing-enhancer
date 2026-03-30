@@ -164,6 +164,7 @@ const Salute = () => {
 
   const [filters, setFilters] = useState<SaluteFilterState>({
     city: cityName || "",
+    date: "",
     transport: "",
     sort: "price",
     amenities: [],

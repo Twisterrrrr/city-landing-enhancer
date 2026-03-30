@@ -1,5 +1,5 @@
 import { useMemo, useState, useEffect } from "react";
-import { useParams, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { HeroSection } from "@/components/landing/HeroSection";
 import { FaqSection } from "@/components/landing/FaqSection";
@@ -412,8 +412,7 @@ function pickBest(variants: DinnerCruiseVariant[]): number | null {
 // ─── Page ───────────────────────────────────────────────────
 
 const DinnerCruise = () => {
-  const { city: citySlug } = useParams<{ city?: string }>();
-  const landing = citySlug ? DINNER_CRUISE_CITIES[citySlug] : undefined;
+  const landing = DINNER_CRUISE_CITIES["moscow"];
 
   const [filters, setFilters] = useState<DinnerFilterState>({
     menuType: "",
@@ -443,26 +442,6 @@ const DinnerCruise = () => {
 
   const bestIdx = useMemo(() => pickBest(sorted), [sorted]);
 
-  if (!landing) {
-    return (
-      <div className="min-h-screen bg-background flex items-center justify-center">
-        <div className="text-center space-y-4">
-          <h1 className="text-2xl font-bold text-foreground">
-            Ужин на теплоходе
-          </h1>
-          <p className="text-muted-foreground">
-            Выберите город для просмотра предложений
-          </p>
-          <Link
-            to="/dinner-cruise/moscow"
-            className="inline-flex px-5 py-2.5 rounded-lg bg-primary text-primary-foreground font-semibold hover:bg-primary/90 transition-colors"
-          >
-            Москва
-          </Link>
-        </div>
-      </div>
-    );
-  }
 
   return (
     <div className="min-h-screen bg-background">

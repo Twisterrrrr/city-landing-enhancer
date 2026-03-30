@@ -27,7 +27,7 @@ const App = () => (
           <Route path="/bus-tours" element={<BusTours />} />
           <Route path="/bus-tours/:city" element={<BusTours />} />
           <Route path="/dinner-cruise" element={<DinnerCruise />} />
-          <Route path="/dinner-cruise/:city" element={<DinnerCruise />} />
+          <Route path="/events/dinner-cruise/moscow" element={<DinnerCruise />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>

@@ -6,11 +6,13 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { DateFilter } from "@/components/filters/DateFilter";
 import type { Amenity } from "@/components/landing/TripCard";
 import { AMENITY_META } from "@/components/landing/TripCard";
 
 export interface RiverFilterState {
   city: string;
+  date: string;
   timeSlot: string;
   sort: string;
   amenities: Amenity[];
@@ -122,6 +124,8 @@ export function RiverFilterBar({ cities, filters, onChange }: RiverFilterBarProp
 
       {/* Desktop (lg+): single row */}
       <div className="hidden lg:flex flex-wrap items-center gap-2">
+        <DateFilter value={filters.date} onChange={(d) => onChange({ ...filters, date: d })} />
+        <div className="w-px h-6 bg-border mx-1" />
         <Chip label="Все города" active={filters.city === ""} onClick={() => onChange({ ...filters, city: "" })} />
         {cities.map((c) => (
           <Chip key={c} label={c} active={filters.city === c} onClick={() => onChange({ ...filters, city: c })} />
@@ -142,6 +146,7 @@ export function RiverFilterBar({ cities, filters, onChange }: RiverFilterBarProp
 
       {/* Tablet (sm–lg): stacked rows */}
       <div className="hidden sm:block lg:hidden space-y-3">
+        <DateFilter value={filters.date} onChange={(d) => onChange({ ...filters, date: d })} />
         <div className="flex items-center gap-2 flex-wrap">
           <Chip label="Все города" active={filters.city === ""} onClick={() => onChange({ ...filters, city: "" })} />
           {cities.map((c) => (
@@ -165,6 +170,7 @@ export function RiverFilterBar({ cities, filters, onChange }: RiverFilterBarProp
 
       {/* Mobile (<sm): stacked rows */}
       <div className="sm:hidden space-y-3">
+        <DateFilter value={filters.date} onChange={(d) => onChange({ ...filters, date: d })} />
         <div className="flex items-center gap-2">
           <Select value={filters.city || "all"} onValueChange={(v) => onChange({ ...filters, city: v === "all" ? "" : v })}>
             <SelectTrigger className="flex-1 h-9 rounded-lg text-sm"><SelectValue placeholder="Все города" /></SelectTrigger>
