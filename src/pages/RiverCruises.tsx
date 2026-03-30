@@ -198,7 +198,7 @@ const RiverCruises = () => {
   const seoTitle = landing?.seoTitle || "Речные прогулки по России — расписание и цены 2026";
   const seoDesc = landing?.seoDescription || "Речные прогулки в 12+ городах России: Москва, Петербург, Казань и другие. Сравните расписание, цены и отзывы.";
   const heroTitle = landing
-    ? `Речные прогулки по ${landing.cityName} сегодня — цены, расписание и сравнение теплоходов`
+    ? `Речные прогулки по ${landing.cityNameDative} сегодня — цены, расписание и сравнение теплоходов`
     : "Речные прогулки по России — цены, расписание и сравнение теплоходов";
   const heroSubtitle = landing?.heroSubtitle || "От Невы до Енисея — сравните предложения речных прогулок в 12 городах России.";
   const faqItems = landing?.faq || DEFAULT_FAQ;
