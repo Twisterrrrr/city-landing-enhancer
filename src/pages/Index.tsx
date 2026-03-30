@@ -157,6 +157,11 @@ const Index = () => {
         totalTrips={MOCK_VARIANTS.length}
         totalSold={14820}
         avgRating={4.7}
+        breadcrumbs={[
+          { label: "Главная", href: "/" },
+          { label: "Санкт-Петербург", href: "/river-cruises/spb" },
+          { label: "Ночные мосты" },
+        ]}
       />
 
       {/* Schedule */}

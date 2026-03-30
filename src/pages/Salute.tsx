@@ -216,6 +216,11 @@ const Salute = () => {
         totalTrips={MOCK_VARIANTS.length}
         totalSold={8340}
         avgRating={4.7}
+        breadcrumbs={[
+          { label: "Главная", href: "/" },
+          { label: "Салют 9 мая", href: "/salute-9-may" },
+          ...(landing ? [{ label: landing.cityName }] : []),
+        ]}
       />
 
       {/* City-specific intro */}

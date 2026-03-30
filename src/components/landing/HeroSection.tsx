@@ -1,15 +1,26 @@
 import { motion } from "framer-motion";
 import { Shield, Star, TrendingUp } from "lucide-react";
 
+export interface BreadcrumbItem {
+  label: string;
+  href?: string;
+}
+
 interface HeroProps {
   title: string;
   subtitle: string;
   totalTrips: number;
   totalSold: number;
   avgRating: number;
+  breadcrumbs?: BreadcrumbItem[];
 }
 
-export function HeroSection({ title, subtitle, totalTrips, totalSold, avgRating }: HeroProps) {
+export function HeroSection({ title, subtitle, totalTrips, totalSold, avgRating, breadcrumbs }: HeroProps) {
+  const crumbs: BreadcrumbItem[] = breadcrumbs || [
+    { label: "Главная", href: "/" },
+    { label: title },
+  ];
+
   return (
     <section className="relative overflow-hidden" style={{ background: "var(--gradient-hero)" }}>
       <div className="container mx-auto px-4 py-16 md:py-24">
@@ -20,11 +31,16 @@ export function HeroSection({ title, subtitle, totalTrips, totalSold, avgRating 
           className="max-w-3xl"
         >
           <nav className="flex items-center gap-2 text-sm text-primary-foreground/70 mb-6">
-            <a href="/" className="hover:text-primary-foreground transition-colors">Главная</a>
-            <span>/</span>
-            <a href="/" className="hover:text-primary-foreground transition-colors">Санкт-Петербург</a>
-            <span>/</span>
-            <span className="text-primary-foreground">Ночные мосты</span>
+            {crumbs.map((c, i) => (
+              <span key={i} className="flex items-center gap-2">
+                {i > 0 && <span>/</span>}
+                {c.href ? (
+                  <a href={c.href} className="hover:text-primary-foreground transition-colors">{c.label}</a>
+                ) : (
+                  <span className="text-primary-foreground">{c.label}</span>
+                )}
+              </span>
+            ))}
           </nav>
 
           <h1 className="text-3xl md:text-5xl font-extrabold text-primary-foreground leading-tight mb-4">
