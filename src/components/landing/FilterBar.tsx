@@ -36,6 +36,7 @@ const SORT_OPTIONS = [
   { value: "time", label: "По времени" },
   { value: "price", label: "По цене" },
   { value: "popular", label: "По рейтингу" },
+  { value: "distance", label: "По удалённости" },
 ];
 
 const ALL_AMENITIES: Amenity[] = ["food", "music", "guide", "audioguide", "deck"];
@@ -184,7 +185,7 @@ export function FilterBar({ dates, piers, filters, onChange }: FilterBarProps) {
           >
             <SelectTrigger className="w-[150px] h-9 rounded-lg text-sm"><SelectValue placeholder="Выбрать дату" /></SelectTrigger>
             <SelectContent>
-              <SelectItem value="pick">Все даты</SelectItem>
+              <SelectItem value="pick">Другая дата</SelectItem>
               {dates.map((d) => <SelectItem key={d} value={d}>{formatDateShort(d)}</SelectItem>)}
             </SelectContent>
           </Select>
