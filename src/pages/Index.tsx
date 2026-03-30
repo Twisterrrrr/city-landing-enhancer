@@ -105,6 +105,15 @@ const Index = () => {
     amenities: [],
   });
 
+  const geo = useGeolocation();
+
+  // Auto-request geolocation when user picks distance sort
+  useEffect(() => {
+    if (filters.sort === "distance" && !geo.position && !geo.loading) {
+      geo.request();
+    }
+  }, [filters.sort]);
+
   const filtered = useMemo(() => {
     return MOCK_VARIANTS.filter((v) => {
       if (v.availableTickets <= 0) return true;
@@ -126,9 +135,15 @@ const Index = () => {
     const out = [...filtered];
     if (filters.sort === "price") out.sort((a, b) => a.price - b.price);
     else if (filters.sort === "popular") out.sort((a, b) => b.rating - a.rating);
-    else out.sort((a, b) => new Date(a.startsAt).getTime() - new Date(b.startsAt).getTime());
+    else if (filters.sort === "distance" && geo.position) {
+      out.sort((a, b) => {
+        const da = PIER_COORDS[a.pier] ? distanceMeters(geo.position!, PIER_COORDS[a.pier]) : Infinity;
+        const db = PIER_COORDS[b.pier] ? distanceMeters(geo.position!, PIER_COORDS[b.pier]) : Infinity;
+        return da - db;
+      });
+    } else out.sort((a, b) => new Date(a.startsAt).getTime() - new Date(b.startsAt).getTime());
     return out;
-  }, [filtered, filters.sort]);
+  }, [filtered, filters.sort, geo.position]);
 
   const bestIdx = useMemo(() => pickOptimal(sorted), [sorted]);
 
