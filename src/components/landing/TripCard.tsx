@@ -64,7 +64,7 @@ export function TripCard({ variant, isBest, index }: TripCardProps) {
       )}
 
       {/* Desktop layout */}
-      <div className="hidden md:flex md:items-center gap-6">
+      <div className="hidden md:flex md:items-center gap-4">
         {/* Time & Date */}
         <div className="w-28 shrink-0">
           <div className="text-2xl font-bold text-foreground">{formatTime(variant.startsAt)}</div>
