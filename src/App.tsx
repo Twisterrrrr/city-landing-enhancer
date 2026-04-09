@@ -9,6 +9,7 @@ import RiverCruises from "./pages/RiverCruises.tsx";
 import BusTours from "./pages/BusTours.tsx";
 import DinnerCruise from "./pages/DinnerCruise.tsx";
 import NotFound from "./pages/NotFound.tsx";
+import Location from "./pages/Location.tsx";
 
 const queryClient = new QueryClient();
 
