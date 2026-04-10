@@ -1,5 +1,3 @@
-import { Card, CardContent } from "@/components/ui/card";
-import { AspectRatio } from "@/components/ui/aspect-ratio";
 import { BookOpen } from "lucide-react";
 import type { RelatedArticle } from "@/data/locations";
 
@@ -12,29 +10,29 @@ export function LocationArticles({ articles }: Props) {
 
   return (
     <section>
-      <h2 className="text-2xl font-bold text-foreground mb-4 flex items-center gap-2">
-        <BookOpen className="w-6 h-6 text-primary" />
-        Подборки и статьи
+      <h2 className="text-xl font-bold text-foreground mb-4 flex items-center gap-2">
+        <BookOpen className="w-5 h-5 text-primary" />
+        Читайте также
       </h2>
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
         {articles.map((a, i) => (
           <a key={i} href={a.url} className="block">
-            <Card className="overflow-hidden hover:shadow-md transition-shadow group">
-              <AspectRatio ratio={2 / 1}>
+            <div className="bg-card rounded-xl border border-border overflow-hidden hover:shadow-md transition-shadow group">
+              <div className="relative h-28 overflow-hidden">
                 <img
                   src={a.image}
                   alt={a.title}
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                   loading="lazy"
                 />
-              </AspectRatio>
-              <CardContent className="p-4">
-                <p className="font-semibold text-foreground group-hover:text-primary transition-colors">
+              </div>
+              <div className="p-3">
+                <h3 className="font-semibold text-sm text-foreground group-hover:text-primary transition-colors line-clamp-2">
                   {a.title}
-                </p>
-                <p className="text-sm text-muted-foreground mt-1">{a.description}</p>
-              </CardContent>
-            </Card>
+                </h3>
+                <p className="text-xs text-muted-foreground mt-1">{a.description}</p>
+              </div>
+            </div>
           </a>
         ))}
       </div>
