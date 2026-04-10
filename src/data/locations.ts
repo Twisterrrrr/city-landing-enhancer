@@ -35,6 +35,15 @@ export interface RelatedArticle {
   image: string;
 }
 
+export interface LocationEvent {
+  id: string;
+  title: string;
+  date: string;
+  time: string;
+  price: number;
+  image: string;
+}
+
 export interface LocationData {
   slug: string;
   title: string;
@@ -47,22 +56,44 @@ export interface LocationData {
   address: string;
   mapUrl?: string;
   howToGet: string;
+  metro?: string;
+  phone?: string;
+  website?: string;
   visitRules: string[];
   workingHours: WorkingHours[];
   tickets: TicketOption[];
   events: LocationEvent[];
   relatedPlaces: RelatedPlace[];
   articles: RelatedArticle[];
+  // New selling fields
+  rating: number;
+  reviewCount: number;
+  priceFrom: number | null;
+  introLead?: string;
+  highlights: string[];
+  features: string[];
 }
 
-export interface LocationEvent {
-  id: string;
-  title: string;
-  date: string;
-  time: string;
-  price: number;
-  image: string;
-}
+export type LocationFeature =
+  | "no_queue"
+  | "audio_guide"
+  | "kids_friendly"
+  | "wheelchair"
+  | "guided_tour"
+  | "photo_allowed"
+  | "cafe"
+  | "gift_shop";
+
+export const FEATURE_LABELS: Record<string, { label: string; icon: string }> = {
+  no_queue: { label: "Без очереди", icon: "zap" },
+  audio_guide: { label: "Аудиогид", icon: "headphones" },
+  kids_friendly: { label: "Подходит детям", icon: "baby" },
+  wheelchair: { label: "Доступная среда", icon: "accessibility" },
+  guided_tour: { label: "С экскурсоводом", icon: "users" },
+  photo_allowed: { label: "Можно фотографировать", icon: "check" },
+  cafe: { label: "Есть кафе", icon: "check" },
+  gift_shop: { label: "Сувенирный магазин", icon: "check" },
+};
 
 // ─── MOCK DATA ──────────────────────────────────────────────
 
@@ -78,11 +109,16 @@ export const LOCATIONS: Record<string, LocationData> = {
       "https://images.unsplash.com/photo-1548834925-e48f8a27ae58?w=600&q=80",
       "https://images.unsplash.com/photo-1555861496-0666c8981751?w=600&q=80",
       "https://images.unsplash.com/photo-1513326738677-b964603b136d?w=600&q=80",
+      "https://images.unsplash.com/photo-1564399579-0145267d0c4e?w=600&q=80",
     ],
     description:
       "Один из крупнейших и наиболее значимых художественных и культурно-исторических музеев мира. Коллекция насчитывает около трёх миллионов произведений искусства и памятников мировой культуры, начиная с каменного века и до нашего столетия.",
+    introLead: "Крупнейший музей мира — 3 миллиона экспонатов, от Рембрандта до Матисса, в роскошных залах Зимнего дворца.",
     address: "Дворцовая наб., 38, Санкт-Петербург, 190000",
     mapUrl: "https://yandex.ru/maps/-/CDxgZ4Ks",
+    metro: "Адмиралтейская",
+    phone: "+7 (812) 710-90-79",
+    website: "https://hermitagemuseum.org",
     howToGet:
       "Метро «Адмиралтейская» — 5 минут пешком. Автобусы 7, 10, 24 до остановки «Дворцовая площадь». Ближайшая парковка на Миллионной улице.",
     visitRules: [
@@ -91,14 +127,24 @@ export const LOCATIONS: Record<string, LocationData> = {
       "Запрещено трогать экспонаты",
       "Дети до 14 лет — бесплатно",
     ],
+    highlights: [
+      "Более 3 миллионов экспонатов",
+      "Залы импрессионистов и Рембрандта",
+      "Аудиогид на 12 языках",
+      "Бесплатно для детей до 14 лет",
+    ],
+    features: ["audio_guide", "kids_friendly", "wheelchair", "photo_allowed", "cafe", "gift_shop"],
+    rating: 4.8,
+    reviewCount: 12450,
+    priceFrom: 500,
     workingHours: [
-      { day: "Вторник", hours: "10:30–18:00" },
-      { day: "Среда", hours: "10:30–21:00" },
-      { day: "Четверг", hours: "10:30–18:00" },
-      { day: "Пятница", hours: "10:30–21:00" },
-      { day: "Суббота", hours: "10:30–18:00" },
-      { day: "Воскресенье", hours: "10:30–18:00" },
-      { day: "Понедельник", hours: "Выходной" },
+      { day: "Вт", hours: "10:30–18:00" },
+      { day: "Ср", hours: "10:30–21:00" },
+      { day: "Чт", hours: "10:30–18:00" },
+      { day: "Пт", hours: "10:30–21:00" },
+      { day: "Сб", hours: "10:30–18:00" },
+      { day: "Вс", hours: "10:30–18:00" },
+      { day: "Пн", hours: "Выходной" },
     ],
     tickets: [
       { title: "Основная экспозиция", price: 500, description: "Главный музейный комплекс" },
@@ -136,8 +182,12 @@ export const LOCATIONS: Record<string, LocationData> = {
     ],
     description:
       "Центральный парк культуры и отдыха имени Горького — главный парк Москвы с набережной, спортивными площадками, кафе, музеем современного искусства «Гараж» и зимним катком.",
+    introLead: "Главный парк Москвы — набережная, фестивали, «Гараж» и самый большой каток в Европе зимой.",
     address: "ул. Крымский Вал, 9, Москва, 119049",
     mapUrl: "https://yandex.ru/maps/-/CDxgZ0Ks",
+    metro: "Парк Культуры",
+    phone: "+7 (495) 995-00-20",
+    website: "https://park-gorkogo.com",
     howToGet:
       "Метро «Парк Культуры» или «Октябрьская» — 10 минут пешком. Прокат велосипедов у входа. Парковка на Крымском Валу (платная).",
     visitRules: [
@@ -146,6 +196,16 @@ export const LOCATIONS: Record<string, LocationData> = {
       "Запрещено разводить костры",
       "Электросамокаты — по выделенным дорожкам",
     ],
+    highlights: [
+      "Вход свободный круглый год",
+      "Набережная Москвы-реки",
+      "Музей «Гараж» на территории",
+      "Каток зимой и лодки летом",
+    ],
+    features: ["kids_friendly", "wheelchair", "cafe"],
+    rating: 4.7,
+    reviewCount: 8320,
+    priceFrom: null,
     workingHours: [
       { day: "Ежедневно", hours: "Круглосуточно" },
     ],

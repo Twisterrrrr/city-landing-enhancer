@@ -1,5 +1,3 @@
-import { Card, CardContent } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
 import { Ticket } from "lucide-react";
 import type { TicketOption } from "@/data/locations";
 
@@ -11,33 +9,39 @@ export function LocationTickets({ tickets }: Props) {
   if (tickets.length === 0) return null;
 
   return (
-    <section>
-      <h2 className="text-2xl font-bold text-foreground mb-4 flex items-center gap-2">
-        <Ticket className="w-6 h-6 text-primary" />
+    <section id="tickets">
+      <h2 className="text-xl font-bold text-foreground mb-4 flex items-center gap-2">
+        <Ticket className="w-5 h-5 text-primary" />
         Входные билеты
       </h2>
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+      <div className="space-y-2">
         {tickets.map((t, i) => (
-          <Card key={i} className="hover:shadow-md transition-shadow">
-            <CardContent className="p-4 flex items-center justify-between gap-4">
-              <div className="min-w-0">
-                <p className="font-semibold text-foreground truncate">{t.title}</p>
-                {t.description && (
-                  <p className="text-sm text-muted-foreground mt-0.5">{t.description}</p>
-                )}
-              </div>
-              <div className="text-right shrink-0">
-                <p className="text-lg font-bold text-primary">
-                  {t.price === 0 ? "Бесплатно" : `${t.price.toLocaleString("ru-RU")} ₽`}
-                </p>
-                {t.url && (
-                  <Button size="sm" className="mt-1" asChild>
-                    <a href={t.url} target="_blank" rel="noopener noreferrer">Купить</a>
-                  </Button>
-                )}
-              </div>
-            </CardContent>
-          </Card>
+          <div
+            key={i}
+            className="bg-card rounded-xl border border-border p-4 flex items-center justify-between gap-4 hover:shadow-md transition-shadow"
+          >
+            <div className="min-w-0">
+              <p className="font-semibold text-foreground">{t.title}</p>
+              {t.description && (
+                <p className="text-sm text-muted-foreground mt-0.5">{t.description}</p>
+              )}
+            </div>
+            <div className="text-right shrink-0 flex items-center gap-3">
+              <p className="text-lg font-bold text-foreground">
+                {t.price === 0 ? "Бесплатно" : `${t.price.toLocaleString("ru-RU")} ₽`}
+              </p>
+              {t.url && (
+                <a
+                  href={t.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="px-4 py-2 bg-primary text-primary-foreground rounded-lg font-semibold text-sm hover:bg-primary/90 transition-colors"
+                >
+                  Купить
+                </a>
+              )}
+            </div>
+          </div>
         ))}
       </div>
     </section>
