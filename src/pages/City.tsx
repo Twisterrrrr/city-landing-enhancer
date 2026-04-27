@@ -3,6 +3,7 @@ import { CITIES } from "@/data/cities";
 import { StickyHeader } from "@/components/landing/StickyHeader";
 import { CityHero } from "@/components/city/CityHero";
 import { CitySights } from "@/components/city/CitySights";
+import { CityCategories } from "@/components/city/CityCategories";
 import { CityVenues } from "@/components/city/CityVenues";
 import { CityTags } from "@/components/city/CityTags";
 import { CityEventsGrid } from "@/components/city/CityEventsGrid";
@@ -16,12 +17,13 @@ const City = () => {
   if (!city) return <NotFound />;
 
   return (
-    <div className="min-h-screen bg-secondary/30">
+    <div className="min-h-screen bg-background">
       <StickyHeader />
       <CityHero city={city} />
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 py-10 md:py-14 space-y-12 md:space-y-16">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 py-10 md:py-14 space-y-12 md:space-y-14">
         <CitySights sights={city.sights} cityName={city.name} />
+        <CityCategories categories={city.categories} />
         <CityVenues venues={city.venues} />
         <CityTags tags={city.popularTags} />
         <CityEventsGrid

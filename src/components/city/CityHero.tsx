@@ -1,4 +1,4 @@
-import { ChevronRight, MapPin, Calendar, Sparkles } from "lucide-react";
+import { ChevronRight, TrendingUp } from "lucide-react";
 import { Link } from "react-router-dom";
 import type { CityData } from "@/data/cities";
 
@@ -8,66 +8,43 @@ interface Props {
 
 export function CityHero({ city }: Props) {
   return (
-    <section className="relative bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 text-white overflow-hidden">
-      <div className="absolute inset-0 opacity-30">
-        <img src={city.heroImage} alt={city.name} className="w-full h-full object-cover" />
-      </div>
-      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-slate-900/40 to-slate-900" />
+    <section className="relative bg-gradient-to-br from-primary via-primary to-blue-700 text-primary-foreground overflow-hidden">
+      <div className="absolute inset-0 opacity-10 pointer-events-none bg-[radial-gradient(circle_at_20%_20%,white,transparent_40%),radial-gradient(circle_at_80%_60%,white,transparent_45%)]" />
 
-      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 py-10 md:py-20">
-        <nav className="flex items-center text-xs text-white/60 gap-1 mb-5">
-          <Link to="/" className="hover:text-white">Главная</Link>
-          <ChevronRight size={12} />
-          <span className="text-white">{city.name}</span>
+      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 py-12 md:py-20">
+        <nav className="flex items-center text-sm text-primary-foreground/70 gap-1.5 mb-6">
+          <Link to="/" className="hover:text-primary-foreground">Главная</Link>
+          <ChevronRight size={14} />
+          <span className="text-primary-foreground">{city.name}</span>
         </nav>
 
-        <div className="max-w-3xl">
-          <div className="flex items-center gap-2 mb-4">
-            <span className="px-3 py-1 bg-white/10 backdrop-blur rounded-full text-xs font-medium flex items-center gap-1.5">
-              <MapPin size={12} /> Город
+        <h1 className="text-4xl sm:text-5xl md:text-6xl font-extrabold leading-[1.05] tracking-tight">
+          {city.name}
+        </h1>
+        <p className="mt-5 text-base md:text-lg text-primary-foreground/85 leading-relaxed max-w-3xl">
+          {city.intro}
+        </p>
+
+        {/* stat chips */}
+        <div className="mt-7 flex flex-wrap gap-2.5">
+          <span className="inline-flex items-center gap-1.5 px-4 py-2 bg-white/15 backdrop-blur rounded-full text-sm font-semibold">
+            <TrendingUp size={14} /> {city.eventsCount} событий в каталоге
+          </span>
+          {city.categories.map((c) => (
+            <span key={c.key} className="inline-flex items-center gap-1.5 px-4 py-2 bg-white/15 backdrop-blur rounded-full text-sm font-medium">
+              <span>{c.emoji}</span> {c.label}: {c.count}
             </span>
-            <span className="px-3 py-1 bg-primary/90 rounded-full text-xs font-semibold flex items-center gap-1.5">
-              <Calendar size={12} /> {city.eventsCount} событий
-            </span>
-          </div>
+          ))}
+        </div>
 
-          <h1 className="text-3xl sm:text-4xl md:text-6xl font-extrabold leading-[1.1] tracking-tight">
-            {city.name}
-          </h1>
-          <p className="mt-5 text-base md:text-lg text-white/80 leading-relaxed max-w-2xl">
-            {city.intro}
-          </p>
-
-          {/* Category quick-jumps */}
-          <div className="mt-7 grid grid-cols-3 gap-2 sm:gap-3 max-w-2xl">
-            {city.categories.map((c) => (
-              <a
-                key={c.key}
-                href={c.href}
-                className="group bg-white/10 hover:bg-white/15 backdrop-blur border border-white/10 rounded-xl px-3 py-3 sm:px-4 sm:py-4 transition-colors"
-              >
-                <div className="text-xl sm:text-2xl mb-1">{c.emoji}</div>
-                <div className="text-xs sm:text-sm font-semibold leading-tight">{c.label}</div>
-                <div className="text-xs text-white/60 mt-0.5">{c.count}</div>
-              </a>
-            ))}
-          </div>
-
-          {/* Primary CTA */}
-          <div className="mt-7 flex flex-wrap gap-3">
-            <a
-              href="#recommended"
-              className="px-6 py-3.5 bg-primary hover:bg-primary/90 text-primary-foreground rounded-xl font-bold text-base shadow-lg shadow-primary/25 inline-flex items-center gap-2 transition-colors"
-            >
-              <Sparkles size={18} /> Все события в {city.name}
-            </a>
-            <a
-              href="#sights"
-              className="px-6 py-3.5 bg-white/10 hover:bg-white/15 backdrop-blur border border-white/15 rounded-xl font-semibold text-base transition-colors"
-            >
-              Что посмотреть
-            </a>
-          </div>
+        {/* Single primary CTA */}
+        <div className="mt-8">
+          <a
+            href="#recommended"
+            className="inline-flex items-center gap-2 px-7 py-3.5 bg-white text-primary rounded-xl font-bold text-base shadow-lg hover:bg-white/95 transition-colors"
+          >
+            🎟️ Все события в {city.name}
+          </a>
         </div>
       </div>
     </section>
