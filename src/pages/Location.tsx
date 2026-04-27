@@ -10,6 +10,7 @@ import { LocationRelated } from "@/components/location/LocationRelated";
 import { LocationArticles } from "@/components/location/LocationArticles";
 import { LocationSidebar } from "@/components/location/LocationSidebar";
 import { LocationMobileStickyBar } from "@/components/location/LocationMobileStickyBar";
+import { LocationOpenDateCTA } from "@/components/location/LocationOpenDateCTA";
 import { StickyHeader } from "@/components/landing/StickyHeader";
 import NotFound from "./NotFound";
 
@@ -29,6 +30,7 @@ const Location = () => {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           {/* Main content — 2/3 */}
           <div className="lg:col-span-2 space-y-10">
+            <LocationOpenDateCTA location={location} />
             <LocationTickets tickets={location.tickets} />
             <LocationAbout location={location} />
             <LocationGallery images={location.gallery} title={location.title} />
