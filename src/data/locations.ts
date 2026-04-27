@@ -43,6 +43,11 @@ export interface LocationEvent {
   time: string;
   price: number;
   image: string;
+  duration?: string;
+  rating?: number;
+  badge?: string;
+  spotsLeft?: number; // для срочности
+  href?: string;
 }
 
 export interface LocationData {
@@ -167,9 +172,9 @@ export const LOCATIONS: Record<string, LocationData> = {
       { title: "Льготный", price: 0, description: "Дети, студенты, пенсионеры РФ" },
     ],
     events: [
-      { id: "e1", title: "Ночь музеев 2025", date: "2025-05-17", time: "18:00–06:00", price: 0, image: "https://images.unsplash.com/photo-1564399579-0145267d0c4e?w=400&q=80" },
-      { id: "e2", title: "Лекция: Рембрандт и его время", date: "2025-06-10", time: "19:00", price: 300, image: "https://images.unsplash.com/photo-1513364776144-60967b0f800f?w=400&q=80" },
-      { id: "e3", title: "Концерт в Эрмитажном театре", date: "2025-07-05", time: "20:00", price: 1500, image: "https://images.unsplash.com/photo-1507838153414-b4b713384a76?w=400&q=80" },
+      { id: "e1", title: "Ночь музеев 2025", date: "17 мая", time: "18:00–06:00", price: 0, image: "https://images.unsplash.com/photo-1564399579-0145267d0c4e?w=400&q=80", duration: "12 ч", rating: 4.9, badge: "Хит", spotsLeft: 12, href: "#" },
+      { id: "e2", title: "Лекция: Рембрандт и его время", date: "10 июня", time: "19:00", price: 300, image: "https://images.unsplash.com/photo-1513364776144-60967b0f800f?w=400&q=80", duration: "1 ч 30 мин", rating: 4.7, href: "#" },
+      { id: "e3", title: "Концерт в Эрмитажном театре", date: "5 июля", time: "20:00", price: 1500, image: "https://images.unsplash.com/photo-1507838153414-b4b713384a76?w=400&q=80", duration: "2 ч", rating: 4.8, badge: "Премьера", href: "#" },
     ],
     relatedPlaces: [
       { slug: "russian-museum", title: "Русский музей", type: "museum", image: "https://images.unsplash.com/photo-1555861496-0666c8981751?w=400&q=80", city: "Санкт-Петербург" },
@@ -229,8 +234,8 @@ export const LOCATIONS: Record<string, LocationData> = {
       { title: "Прокат лодки", price: 800, description: "30 минут, до 4 человек" },
     ],
     events: [
-      { id: "e4", title: "Фестиваль уличной еды", date: "2025-06-15", time: "12:00–22:00", price: 0, image: "https://images.unsplash.com/photo-1555939594-58d7cb561ad1?w=400&q=80" },
-      { id: "e5", title: "Кино под открытым небом", date: "2025-07-20", time: "21:00", price: 200, image: "https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?w=400&q=80" },
+      { id: "e4", title: "Фестиваль уличной еды", date: "15 июня", time: "12:00–22:00", price: 0, image: "https://images.unsplash.com/photo-1555939594-58d7cb561ad1?w=400&q=80", duration: "10 ч", rating: 4.6, badge: "Бесплатно", href: "#" },
+      { id: "e5", title: "Кино под открытым небом", date: "20 июля", time: "21:00", price: 200, image: "https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?w=400&q=80", duration: "2 ч", rating: 4.8, spotsLeft: 8, href: "#" },
     ],
     relatedPlaces: [
       { slug: "muzeon", title: "Парк искусств «Музеон»", type: "art-space", image: "https://images.unsplash.com/photo-1588714477688-cf28a50e94f7?w=400&q=80", city: "Москва" },
@@ -301,8 +306,8 @@ export const LOCATIONS: Record<string, LocationData> = {
       { title: "Экзотариум", price: 300, description: "Доплата к основному билету" },
     ],
     events: [
-      { id: "z1", title: "Кормление морских львов", date: "Ежедневно", time: "11:00 и 15:00", price: 0, image: "https://images.unsplash.com/photo-1452857297128-d9c29adba80b?w=400&q=80" },
-      { id: "z2", title: "Ночь в зоопарке", date: "2025-08-15", time: "20:00–23:00", price: 1200, image: "https://images.unsplash.com/photo-1456926631375-92c8ce872def?w=400&q=80" },
+      { id: "z1", title: "Кормление морских львов — экскурсия с биологом", date: "Ежедневно", time: "11:00 и 15:00", price: 600, image: "https://images.unsplash.com/photo-1452857297128-d9c29adba80b?w=400&q=80", duration: "45 мин", rating: 4.9, badge: "Семейный хит", href: "#" },
+      { id: "z2", title: "Ночь в зоопарке", date: "15 августа", time: "20:00–23:00", price: 1200, image: "https://images.unsplash.com/photo-1456926631375-92c8ce872def?w=400&q=80", duration: "3 ч", rating: 4.8, spotsLeft: 6, badge: "Мало мест", href: "#" },
     ],
     relatedPlaces: [
       { slug: "gorky-park", title: "Парк Горького", type: "park", image: "https://images.unsplash.com/photo-1596484552834-6a58f850e0a1?w=400&q=80", city: "Москва" },
