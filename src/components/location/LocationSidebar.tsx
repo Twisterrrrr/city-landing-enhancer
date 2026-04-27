@@ -1,5 +1,6 @@
 import { Clock, MapPin, Phone, Globe, Train, Navigation } from "lucide-react";
 import type { LocationData } from "@/data/locations";
+import { LocationQuickEvents } from "./LocationQuickEvents";
 
 interface Props {
   location: LocationData;
@@ -37,6 +38,9 @@ export function LocationSidebar({ location }: Props) {
             )}
           </div>
         </div>
+
+        {/* Quick events for fast purchase */}
+        <LocationQuickEvents events={location.events} />
 
         {/* Working hours */}
         <div className="bg-card rounded-xl border border-border p-5">
