@@ -1,4 +1,4 @@
-export type LocationType = "museum" | "theater" | "park" | "pier" | "art-space";
+export type LocationType = "museum" | "theater" | "park" | "pier" | "art-space" | "zoo";
 
 export const LOCATION_TYPE_LABELS: Record<LocationType, string> = {
   museum: "Музей",
@@ -6,6 +6,7 @@ export const LOCATION_TYPE_LABELS: Record<LocationType, string> = {
   park: "Парк",
   pier: "Причал",
   "art-space": "Арт-пространство",
+  zoo: "Зоопарк",
 };
 
 export interface TicketOption {
@@ -72,6 +73,13 @@ export interface LocationData {
   introLead?: string;
   highlights: string[];
   features: string[];
+  // Билет с открытой датой (для зоопарка/музея — посетить в любой день)
+  openDateTicket?: {
+    title: string;
+    price: number;
+    validity: string; // "Действует 6 месяцев"
+    description?: string;
+  };
 }
 
 export type LocationFeature =
