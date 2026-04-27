@@ -1,4 +1,4 @@
-export type LocationType = "museum" | "theater" | "park" | "pier" | "art-space";
+export type LocationType = "museum" | "theater" | "park" | "pier" | "art-space" | "zoo";
 
 export const LOCATION_TYPE_LABELS: Record<LocationType, string> = {
   museum: "Музей",
@@ -6,6 +6,7 @@ export const LOCATION_TYPE_LABELS: Record<LocationType, string> = {
   park: "Парк",
   pier: "Причал",
   "art-space": "Арт-пространство",
+  zoo: "Зоопарк",
 };
 
 export interface TicketOption {
@@ -72,6 +73,13 @@ export interface LocationData {
   introLead?: string;
   highlights: string[];
   features: string[];
+  // Билет с открытой датой (для зоопарка/музея — посетить в любой день)
+  openDateTicket?: {
+    title: string;
+    price: number;
+    validity: string; // "Действует 6 месяцев"
+    description?: string;
+  };
 }
 
 export type LocationFeature =
@@ -146,6 +154,12 @@ export const LOCATIONS: Record<string, LocationData> = {
       { day: "Вс", hours: "10:30–18:00" },
       { day: "Пн", hours: "Выходной" },
     ],
+    openDateTicket: {
+      title: "Билет в Эрмитаж — открытая дата",
+      price: 500,
+      validity: "Действует 30 дней с момента покупки",
+      description: "Основная экспозиция. Используйте в любой удобный день в течение месяца — без привязки к расписанию.",
+    },
     tickets: [
       { title: "Основная экспозиция", price: 500, description: "Главный музейный комплекс" },
       { title: "Главный штаб", price: 500, description: "Импрессионисты, современное искусство" },
@@ -224,6 +238,77 @@ export const LOCATIONS: Record<string, LocationData> = {
     ],
     articles: [
       { title: "Чем заняться в Парке Горького летом", description: "Полный гид по активностям и фестивалям", url: "#", image: "https://images.unsplash.com/photo-1596484552834-6a58f850e0a1?w=400&q=80" },
+    ],
+  },
+
+  "moscow-zoo": {
+    slug: "moscow-zoo",
+    title: "Московский зоопарк",
+    type: "zoo",
+    city: "Москва",
+    timezone: "Europe/Moscow",
+    heroImage: "https://images.unsplash.com/photo-1474314243412-cd4a79f02c6a?w=1200&q=80",
+    gallery: [
+      "https://images.unsplash.com/photo-1474314243412-cd4a79f02c6a?w=600&q=80",
+      "https://images.unsplash.com/photo-1456926631375-92c8ce872def?w=600&q=80",
+      "https://images.unsplash.com/photo-1503919545889-aef636e10ad4?w=600&q=80",
+      "https://images.unsplash.com/photo-1452857297128-d9c29adba80b?w=600&q=80",
+    ],
+    description:
+      "Один из старейших зоопарков Европы — основан в 1864 году. Более 1200 видов животных, контактный зоопарк для детей, экзотариум и сезонные программы кормления.",
+    introLead: "1200+ видов животных в центре Москвы. Билеты с открытой датой — приходите в любой день в течение 6 месяцев.",
+    address: "Большая Грузинская ул., 1, Москва",
+    mapUrl: "https://yandex.ru/maps/-/CDxgZ1Ks",
+    metro: "Баррикадная",
+    phone: "+7 (499) 252-29-51",
+    website: "https://moscowzoo.ru",
+    howToGet: "Метро «Баррикадная» или «Краснопресненская» — 5 минут пешком.",
+    visitRules: [
+      "Кормить животных запрещено",
+      "Вход с домашними животными запрещён",
+      "Дети до 17 лет — бесплатно",
+      "Фото без вспышки разрешено",
+    ],
+    highlights: [
+      "Более 1200 видов животных",
+      "Дети до 17 лет — бесплатно",
+      "Билет действует 6 месяцев",
+      "Контактный зоопарк для малышей",
+    ],
+    features: ["kids_friendly", "wheelchair", "cafe", "gift_shop", "photo_allowed"],
+    rating: 4.6,
+    reviewCount: 24800,
+    priceFrom: 800,
+    workingHours: [
+      { day: "Пн", hours: "10:00–18:00" },
+      { day: "Вт", hours: "10:00–18:00" },
+      { day: "Ср", hours: "10:00–18:00" },
+      { day: "Чт", hours: "10:00–18:00" },
+      { day: "Пт", hours: "10:00–18:00" },
+      { day: "Сб", hours: "10:00–20:00" },
+      { day: "Вс", hours: "10:00–20:00" },
+    ],
+    openDateTicket: {
+      title: "Входной билет с открытой датой",
+      price: 800,
+      validity: "Действует 6 месяцев с момента покупки",
+      description: "Один взрослый. Дети до 17 лет — бесплатно. Можно прийти в любой удобный день.",
+    },
+    tickets: [
+      { title: "Взрослый — открытая дата", price: 800, description: "Действует 6 месяцев" },
+      { title: "Льготный (студент, пенсионер РФ)", price: 400, description: "При предъявлении документа" },
+      { title: "Дети до 17 лет", price: 0, description: "Бесплатно с сопровождающим" },
+      { title: "Экзотариум", price: 300, description: "Доплата к основному билету" },
+    ],
+    events: [
+      { id: "z1", title: "Кормление морских львов", date: "Ежедневно", time: "11:00 и 15:00", price: 0, image: "https://images.unsplash.com/photo-1452857297128-d9c29adba80b?w=400&q=80" },
+      { id: "z2", title: "Ночь в зоопарке", date: "2025-08-15", time: "20:00–23:00", price: 1200, image: "https://images.unsplash.com/photo-1456926631375-92c8ce872def?w=400&q=80" },
+    ],
+    relatedPlaces: [
+      { slug: "gorky-park", title: "Парк Горького", type: "park", image: "https://images.unsplash.com/photo-1596484552834-6a58f850e0a1?w=400&q=80", city: "Москва" },
+    ],
+    articles: [
+      { title: "Московский зоопарк с детьми: маршрут на день", description: "Что посмотреть, где поесть и как не устать", url: "#", image: "https://images.unsplash.com/photo-1474314243412-cd4a79f02c6a?w=400&q=80" },
     ],
   },
 };
