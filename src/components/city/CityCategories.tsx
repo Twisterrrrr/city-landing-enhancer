@@ -20,7 +20,7 @@ export function CityCategories({ categories }: Props) {
                 {c.label}
               </p>
               <p className="text-sm text-muted-foreground">
-                {c.count} {pluralize(c.count, ["событие", "события", "событий"])}
+                {c.count} {pluralize(c.count, ["предложение", "предложения", "предложений"])}
               </p>
             </div>
             <span className="text-primary text-xl font-bold opacity-0 group-hover:opacity-100 transition-opacity">→</span>
